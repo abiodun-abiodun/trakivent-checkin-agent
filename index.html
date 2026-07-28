@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Trakivent Check-in Station</title>
+
+  <style>
+
+    :root {
+
+      --navy: #071f3b;
+
+      --panel: #132f4d;
+
+      --panel-light: #1b3a5b;
+
+      --lime: #9cff00;
+
+      --white: #ffffff;
+
+      --muted: #a9bdd3;
+
+      --border: rgba(156, 255, 0, 0.28);
+
+      --danger: #ff5d67;
+
+      --warning: #ffbf3f;
+
+    }
+
+    * {
+
+      box-sizing: border-box;
+
+    }
+
+    body {
+
+      margin: 0;
+
+      min-height: 100vh;
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      background: var(--navy);
+
+      color: var(--white);
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      padding: 24px;
+
+    }
+
+    .page {
+
+      width: 100%;
+
+      max-width: 600px;
+
+      text-align: center;
+
+    }
+
+    .parent-brand {
+
+      margin-bottom: 22px;
+
+    }
+
+    .parent-brand-name {
+
+      color: var(--white);
+
+      font-size: 14px;
+
+      font-weight: 800;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 7px;
+
+    }
+
+    .parent-brand-tagline {
+
+      color: var(--lime);
+
+      font-size: 12px;
+
+      letter-spacing: 0.2px;
+
+    }
+
+    .station {
+
+      background: var(--panel);
+
+      border: 1px solid var(--border);
+
+      border-radius: 22px;
+
+      padding: 36px;
+
+      box-shadow:
+
+        0 20px 60px rgba(0, 0, 0, 0.28);
+
+    }
+
+    .brand-area {
+
+      margin-bottom: 30px;
+
+    }
+
+    .manspace-logo {
+
+      width: 170px;
+
+      max-width: 75%;
+
+      height: auto;
+
+      display: block;
+
+      margin: 0 auto 22px;
+
+    }
+
+    .product-name {
+
+      font-size: 32px;
+
+      font-weight: 900;
+
+      letter-spacing: 1px;
+
+      color: var(--white);
+
+    }
+
+    .product-subtitle {
+
+      color: var(--muted);
+
+      margin-top: 8px;
+
+      font-size: 15px;
+
+    }
+
+    .event-name {
+
+      background: var(--panel-light);
+
+      border: 1px solid rgba(255, 255, 255, 0.08);
+
+      border-radius: 12px;
+
+      padding: 15px;
+
+      margin-bottom: 24px;
+
+      font-size: 15px;
+
+      font-weight: 700;
+
+    }
+
+    .action-group {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 14px;
+
+    }
+
+    button {
+
+      width: 100%;
+
+      border: none;
+
+      border-radius: 12px;
+
+      padding: 17px;
+
+      font-size: 15px;
+
+      font-weight: 800;
+
+      cursor: pointer;
+
+      transition:
+
+        transform 0.15s ease,
+
+        opacity 0.15s ease;
+
+    }
+
+    button:hover {
+
+      transform: translateY(-1px);
+
+    }
+
+    button:active {
+
+      transform: translateY(0);
+
+    }
+
+    .camera-button {
+
+      background: transparent;
+
+      color: var(--lime);
+
+      border: 1px solid var(--lime);
+
+    }
+
+    .camera-button:hover {
+
+      background: rgba(156, 255, 0, 0.08);
+
+    }
+
+    .manual-section {
+
+      margin-top: 20px;
+
+    }
+
+    .manual-label {
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      margin-bottom: 9px;
+
+    }
+
+    input {
+
+      width: 100%;
+
+      padding: 17px;
+
+      font-size: 16px;
+
+      text-align: center;
+
+      color: var(--white);
+
+      background: #0b2543;
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+
+      border-radius: 12px;
+
+      outline: none;
+
+    }
+
+    input::placeholder {
+
+      color: #7890aa;
+
+    }
+
+    input:focus {
+
+      border-color: var(--lime);
+
+      box-shadow:
+
+        0 0 0 3px rgba(156, 255, 0, 0.12);
+
+    }
+
+    .checkin-button {
+
+      margin-top: 14px;
+
+      background: var(--lime);
+
+      color: #071f3b;
+
+    }
+
+    .checkin-button:hover {
+
+      opacity: 0.9;
+
+    }
+
+    #reader {
+
+      width: 100%;
+
+      margin: 20px auto;
+
+      display: none;
+
+      overflow: hidden;
+
+      border-radius: 14px;
+
+    }
+
+    #result {
+
+      display: none;
+
+      margin-top: 24px;
+
+      padding: 22px;
+
+      border-radius: 14px;
+
+      text-align: center;
+
+    }
+
+    #result.success {
+
+      background: rgba(156, 255, 0, 0.12);
+
+      border: 1px solid rgba(156, 255, 0, 0.45);
+
+    }
+
+    #result.error {
+
+      background: rgba(255, 93, 103, 0.12);
+
+      border: 1px solid rgba(255, 93, 103, 0.45);
+
+    }
+
+    #statusIcon {
+
+      font-size: 40px;
+
+      font-weight: 900;
+
+    }
+
+    #resultTitle {
+
+      font-size: 19px;
+
+      font-weight: 900;
+
+      margin: 8px 0;
+
+    }
+
+    #guestName {
+
+      font-size: 18px;
+
+      font-weight: 800;
+
+      margin-top: 8px;
+
+    }
+
+    #details {
+
+      margin-top: 8px;
+
+      color: var(--muted);
+
+      font-size: 14px;
+
+      line-height: 1.6;
+
+    }
+
+    .footer {
+
+      margin-top: 18px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+    }
+
+    @media (max-width: 520px) {
+
+      body {
+
+        padding: 16px;
+
+      }
+
+      .station {
+
+        padding: 26px 20px;
+
+      }
+
+      .product-name {
+
+        font-size: 28px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <div class="page">
+
+
+    <div class="parent-brand">
+
+      <div class="parent-brand-name">
+
+        MANSPACE TECHNOLOGIES
+
+      </div>
+
+      <div class="parent-brand-tagline">
+
+        Smart digital solutions for modern businesses and events
+
+      </div>
+
+    </div>
+
+
+    <main class="station">
+
+
+      <div class="brand-area">
+
+
+        <img
+
+          src="manspace-technologies-logo.png"
+
+          alt="Manspace Technologies"
+
+          class="manspace-logo"
+
+        >
+
+
+        <div class="product-name">
+
+          TRAKIVENT
+
+        </div>
+
+
+        <div class="product-subtitle">
+
+          Event Check-in Station
+
+        </div>
+
+
+      </div>
+
+
+      <div class="event-name">
+
+        Event: Test Event
+
+      </div>
+
+
+      <div class="action-group">
+
+
+        <button
+  class="camera-button"
+  id="startScannerButton"
+  type="button"
+>
+  ▶ START SCANNING
+</button>
+
+<button
+  class="camera-button"
+  id="stopScannerButton"
+  type="button"
+  style="display:none;margin-top:12px;background:#d9534f;color:#fff;border:none;"
+>
+  ■ STOP SCANNING
+</button>
+
+          📷 SCAN WITH CAMERA
+
+        </button>
+
+
+      </div>
+
+
+      <div id="reader"></div>
+
+
+      <div class="manual-section">
+
+
+        <div class="manual-label">
+
+          Or enter a QR token manually
+
+        </div>
+
+
+        <input
+
+          type="text"
+
+          id="qrInput"
+
+          placeholder="Scan or enter QR token"
+
+          autocomplete="off"
+
+        >
+
+
+        <button
+
+          class="checkin-button"
+
+          id="checkInButton"
+
+          type="button"
+
+        >
+
+          CHECK IN GUEST
+
+        </button>
+
+
+      </div>
+
+
+      <div id="result">
+
+
+        <div id="statusIcon"></div>
+
+
+        <div id="resultTitle"></div>
+
+
+        <div id="guestName"></div>
+
+
+        <div id="details"></div>
+
+
+      </div>
+
+
+    </main>
+
+
+    <div class="footer">
+
+      Powered by Manspace Technologies
+
+    </div>
+
+
+  </div>
+
+
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script src="app.js"></script>
+
+
+</body>
+
+</html>
