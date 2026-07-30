@@ -20,8 +20,8 @@ let html5QrCode = null;
 function startCameraScanner() {
 
   // Switch buttons
-  startScannerButton.style.display = 'none';
-  stopScannerButton.style.display = 'block';
+ startScannerButton.hidden = true;
+stopScannerButton.hidden = false;
 
   const reader = document.getElementById('reader');
 
@@ -95,8 +95,8 @@ function stopCameraScanner() {
         document.getElementById('reader').style.display = 'none';
 
         // Return buttons to idle state
-        startScannerButton.style.display = 'block';
-        stopScannerButton.style.display = 'none';
+        startScannerButton.hidden = false;
+stopScannerButton.hidden = true;
 
       })
 
@@ -129,20 +129,53 @@ function checkInGuest() {
 
     showInvalidQR();
 
+    resumeScanningSession();
+
     return;
 
   }
 
-qrInput.value = token;
-
-// Stop the camera before checking in
-html5QrCode.pause(true);
-
-// Automatically perform check-in
-checkInGuest();
+  processCheckIn(token);
 
 }
 
+function processCheckIn(token) {
+
+  console.log("Processing QR Token:", token);
+
+  // Temporary demo success
+
+  const guest = {
+
+    name: "Demo Guest",
+
+    registrationNumber: token,
+
+    ticketType: "VIP"
+
+  };
+
+  showSuccess(guest);
+
+  resumeScanningSession();
+
+}
+
+function resumeScanningSession() {
+
+  if (!html5QrCode) return;
+
+  setTimeout(function () {
+
+    result.style.display = "none";
+
+    qrInput.value = "";
+
+    html5QrCode.resume();
+
+  }, 3000);
+
+}
 
 // =====================================
 // BUTTON EVENTS
@@ -193,9 +226,9 @@ qrInput.addEventListener(
 
 function showSuccess(data) {
 
-  result.className = 'success';
+result.className = 'result-overlay success';
 
-  result.style.display = 'block';
+result.style.display = 'flex';
 
   statusIcon.textContent = '✓';
 
@@ -218,9 +251,9 @@ function showSuccess(data) {
 
 function showAlreadyCheckedIn(data) {
 
-  result.className = 'error';
+result.className = 'result-overlay error';
 
-  result.style.display = 'block';
+result.style.display = 'flex';
 
   statusIcon.textContent = '⚠';
 
@@ -240,9 +273,9 @@ function showAlreadyCheckedIn(data) {
 
 function showInvalidQR() {
 
-  result.className = 'error';
+result.className = 'result-overlay error';
 
-  result.style.display = 'block';
+result.style.display = 'flex';
 
   statusIcon.textContent = '✕';
 
@@ -261,9 +294,9 @@ function showInvalidQR() {
 
 function showSystemError() {
 
-  result.className = 'error';
+ result.className = 'result-overlay error';
 
-  result.style.display = 'block';
+result.style.display = 'flex';
 
   statusIcon.textContent = '✕';
 

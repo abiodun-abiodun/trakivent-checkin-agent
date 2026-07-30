@@ -238,6 +238,24 @@
 
     }
 
+    .stop-button {
+
+  background: #d9534f;
+
+  color: #ffffff;
+
+  border: none;
+
+  margin-top: 12px;
+
+}
+
+.stop-button:hover {
+
+  opacity: 0.9;
+
+}
+
     .camera-button:hover {
 
       background: rgba(156, 255, 0, 0.08);
@@ -330,73 +348,110 @@
 
     #result {
 
-      display: none;
+  display: none;
 
-      margin-top: 24px;
+}
 
-      padding: 22px;
+.result-overlay {
 
-      border-radius: 14px;
+  position: fixed;
 
-      text-align: center;
+  inset: 0;
 
-    }
+  background: rgba(7, 31, 59, 0.45);
 
-    #result.success {
+  display: none;
 
-      background: rgba(156, 255, 0, 0.12);
+  justify-content: center;
 
-      border: 1px solid rgba(156, 255, 0, 0.45);
+  align-items: center;
 
-    }
+  z-index: 9999;
 
-    #result.error {
+  padding: 20px;
 
-      background: rgba(255, 93, 103, 0.12);
+}
 
-      border: 1px solid rgba(255, 93, 103, 0.45);
+.result-card {
 
-    }
+  width: 100%;
+
+  max-width: 520px;
+
+  background: #1d4b43;
+
+  border: 2px solid var(--lime);
+
+  border-radius: 22px;
+
+  padding: 40px;
+
+  text-align: center;
+
+  box-shadow:
+    0 0 30px rgba(156,255,0,.18);
+
+}
+
+    #result.success .result-card {
+
+  background: #1d4b43;
+
+  border-color: var(--lime);
+
+}
+
+   #result.error .result-card {
+
+  background: #4b2328;
+
+  border-color: var(--danger);
+
+}
 
     #statusIcon {
 
-      font-size: 40px;
+  font-size: 56px;
 
-      font-weight: 900;
+  font-weight: 900;
 
-    }
+}
 
-    #resultTitle {
+   #resultTitle {
 
-      font-size: 19px;
+  font-size: 24px;
 
-      font-weight: 900;
+  font-weight: 900;
 
-      margin: 8px 0;
+  margin: 12px 0;
 
-    }
+}
 
     #guestName {
 
-      font-size: 18px;
+  font-size: 30px;
 
-      font-weight: 800;
+  font-weight: 900;
 
-      margin-top: 8px;
+  text-transform: uppercase;
 
-    }
+  margin-top: 12px;
+
+  color: var(--white);
+
+}
 
     #details {
 
-      margin-top: 8px;
+  margin-top: 14px;
 
-      color: var(--muted);
+  color: var(--muted);
 
-      font-size: 14px;
+  font-size: 16px;
 
-      line-height: 1.6;
+  line-height: 1.8;
 
-    }
+}
 
     .footer {
 
@@ -441,21 +496,7 @@
   <div class="page">
 
 
-    <div class="parent-brand">
 
-      <div class="parent-brand-name">
-
-        MANSPACE TECHNOLOGIES
-
-      </div>
-
-      <div class="parent-brand-tagline">
-
-        Smart digital solutions for modern businesses and events
-
-      </div>
-
-    </div>
 
 
     <main class="station">
@@ -490,7 +531,21 @@
 
 
       </div>
+<div id="result" class="result-overlay">
 
+  <div class="result-card">
+
+    <div id="statusIcon"></div>
+
+    <div id="resultTitle"></div>
+
+    <div id="guestName"></div>
+
+    <div id="details"></div>
+
+  </div>
+
+</div>
 
       <div class="event-name">
 
@@ -499,32 +554,26 @@
       </div>
 
 
-      <div class="action-group">
+    <div class="action-group">
 
+  <button
+    id="startScannerButton"
+    class="camera-button"
+    type="button"
+  >
+    ▶ START SCANNING
+  </button>
 
-        <button
-  class="camera-button"
-  id="startScannerButton"
-  type="button"
->
-  ▶ START SCANNING
-</button>
+  <button
+    id="stopScannerButton"
+    class="camera-button stop-button"
+    type="button"
+    hidden
+  >
+    ■ STOP SCANNING
+  </button>
 
-<button
-  class="camera-button"
-  id="stopScannerButton"
-  type="button"
-  style="display:none;margin-top:12px;background:#d9534f;color:#fff;border:none;"
->
-  ■ STOP SCANNING
-</button>
-
-          📷 SCAN WITH CAMERA
-
-        </button>
-
-
-      </div>
+</div>
 
 
       <div id="reader"></div>
@@ -571,22 +620,7 @@
       </div>
 
 
-      <div id="result">
-
-
-        <div id="statusIcon"></div>
-
-
-        <div id="resultTitle"></div>
-
-
-        <div id="guestName"></div>
-
-
-        <div id="details"></div>
-
-
-      </div>
+      
 
 
     </main>
