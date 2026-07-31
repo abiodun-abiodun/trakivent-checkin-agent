@@ -393,26 +393,37 @@
 
 }
 
-    #result.success .result-card {
+   .result-overlay.success .result-card {
 
   background: #1d4b43;
 
-  border-color: var(--lime);
+  border: 2px solid var(--lime);
 
 }
-#result.duplicate .result-card {
+
+.result-overlay.duplicate .result-card {
 
   background: #6a5200;
 
-  border-color: #ffd54a;
+  border: 2px solid #ffd54a;
 
 }
 
-   #result.error .result-card {
+.result-overlay.error .result-card {
 
   background: #4b2328;
 
-  border-color: var(--danger);
+  border: 2px solid var(--danger);
+
+}
+
+.result-overlay.processing .result-card {
+
+  background: #12395c;
+
+  border: 2px solid #4da6ff;
+
+  color: var(--white);
 
 }
 

@@ -1,499 +1,201 @@
 // =====================================================
 // TRAKIVENT CHECK-IN AGENT
-// Version: v0.3.1
+// Version: v0.3.2
 // Manspace Technologies
 // =====================================================
-
 
 
 // =====================================================
 // CONFIGURATION
 // =====================================================
 
-const API_URL =
-"https://script.google.com/macros/s/AKfycbw1dJq1BYbqAzonBP7V9plYfZFMChY_NGc1Pu2eFmTEXj69AWNBjPrPr22NUWYjwZSd/exec";
+const CONFIG = {
 
-const OVERLAY_DURATION = 4500;
+    API_URL:
+        "https://script.google.com/macros/s/AKfycbw1dJq1BYbqAzonBP7V9plYfZFMChY_NGc1Pu2eFmTEXj69AWNBjPrPr22NUWYjwZSd/exec",
 
+    OVERLAY_DURATION: 4500,
+
+    CAMERA_FPS: 10,
+
+    QR_BOX: {
+
+        width: 250,
+        height: 250
+
+    }
+
+};
 
 
 // =====================================================
-// DOM ELEMENTS
+// DOM REFERENCES
 // =====================================================
 
 const qrInput =
-document.getElementById("qrInput");
+    document.getElementById("qrInput");
 
 const checkInButton =
-document.getElementById("checkInButton");
+    document.getElementById("checkInButton");
 
 const startScannerButton =
-document.getElementById("startScannerButton");
+    document.getElementById("startScannerButton");
 
 const stopScannerButton =
-document.getElementById("stopScannerButton");
+    document.getElementById("stopScannerButton");
 
 const reader =
-document.getElementById("reader");
+    document.getElementById("reader");
 
 const result =
-document.getElementById("result");
+    document.getElementById("result");
 
 const statusIcon =
-document.getElementById("statusIcon");
+    document.getElementById("statusIcon");
 
 const resultTitle =
-document.getElementById("resultTitle");
+    document.getElementById("resultTitle");
 
 const guestName =
-document.getElementById("guestName");
+    document.getElementById("guestName");
 
 const details =
-document.getElementById("details");
-
+    document.getElementById("details");
 
 
 // =====================================================
-// GLOBALS
+// APPLICATION STATE
 // =====================================================
 
 let html5QrCode = null;
 
+let scannerRunning = false;
+
+let processing = false;
 
 
 // =====================================================
-// CAMERA ENGINE
+// INITIALISATION
+// =====================================================
+
+window.addEventListener("load", initialiseApplication);
+
+function initialiseApplication() {
+
+    qrInput.focus();
+
+    stopScannerButton.hidden = true;
+
+    console.log("TRAKIVENT v0.3.2 started.");
+
+}
+// =====================================================
+// SCANNER ENGINE
 // =====================================================
 
 function startCameraScanner() {
 
-    startScannerButton.hidden = true;
-    stopScannerButton.hidden = false;
+    if (scannerRunning) return;
 
     reader.style.display = "block";
     reader.innerHTML = "";
 
-    html5QrCode =
-    new Html5Qrcode("reader");
+    startScannerButton.hidden = true;
+    stopScannerButton.hidden = false;
+
+    html5QrCode = new Html5Qrcode("reader");
 
     html5QrCode.start(
 
         { facingMode: "environment" },
 
         {
-
-            fps: 10,
-
-            qrbox: {
-
-                width: 250,
-                height: 250
-
-            }
-
+            fps: CONFIG.CAMERA_FPS,
+            qrbox: CONFIG.QR_BOX
         },
 
-        onQRCodeDetected,
+        onScanSuccess,
 
-        function () {
-
-            // Ignore scan noise
-
-        }
+        onScanFailure
 
     )
 
-    .catch(function (error) {
+    .then(() => {
+
+        scannerRunning = true;
+
+        console.log("Camera scanner started.");
+
+    })
+
+    .catch(error => {
 
         console.error(error);
 
-        showSystemError();
+        scannerRunning = false;
 
-        stopCameraScanner();
+        reader.style.display = "none";
+
+        showSystemError();
 
     });
 
 }
-
 
 
 function stopCameraScanner() {
 
-    if (!html5QrCode) {
-
-        startScannerButton.hidden = false;
-        stopScannerButton.hidden = true;
-
-        return;
-
-    }
+    if (!html5QrCode || !scannerRunning) return;
 
     html5QrCode.stop()
 
-    .then(function () {
+        .then(() => {
 
-        html5QrCode.clear();
+            html5QrCode.clear();
 
-        html5QrCode = null;
+            html5QrCode = null;
 
-        reader.style.display = "none";
+            scannerRunning = false;
 
-        startScannerButton.hidden = false;
-        stopScannerButton.hidden = true;
+            reader.style.display = "none";
 
-    })
+            startScannerButton.hidden = false;
+            stopScannerButton.hidden = true;
 
-    .catch(function (error) {
+            console.log("Camera scanner stopped.");
 
-        console.error(error);
+        })
 
-    });
+        .catch(console.error);
 
 }
 
 
+function onScanSuccess(decodedText) {
 
-function onQRCodeDetected(decodedText) {
+    if (processing) return;
+
+    processing = true;
 
     qrInput.value = decodedText;
 
-    html5QrCode.pause(true);
+    if (html5QrCode) {
+
+        html5QrCode.pause(true);
+
+    }
 
     checkInGuest();
 
 }
-// =====================================================
-// API ENGINE
-// =====================================================
 
-async function processCheckIn(token) {
 
-    console.log("Processing:", token);
-    
-    showProcessing();
+function onScanFailure() {
 
-    try {
-
-        const response = await fetch(
-
-            `${API_URL}?action=checkin&token=${encodeURIComponent(token)}`
-
-        );
-
-        const apiResult = await response.json();
-
-        console.log(apiResult);
-
-        if (apiResult.success) {
-
-            showSuccess(apiResult.guest);
-
-        }
-
-        else if (apiResult.status === "duplicate") {
-
-            showDuplicate(apiResult.guest);
-
-        }
-
-        else {
-
-            showInvalidQR();
-
-        }
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        showSystemError();
-
-    }
-
-    resumeScanningSession();
-
-}
-
-
-
-// =====================================================
-// CHECK-IN ENGINE
-// =====================================================
-
-function checkInGuest() {
-
-    const token = qrInput.value.trim();
-
-    if (!token) {
-
-        showInvalidQR();
-
-        resumeScanningSession();
-
-        return;
-
-    }
-
-    processCheckIn(token);
-
-}
-
-
-
-function resumeScanningSession() {
-
-    setTimeout(function () {
-
-        hideOverlay();
-
-        // Clear previous token
-        qrInput.value = "";
-
-        // Put cursor back into the input
-        qrInput.focus();
-
-        // Resume camera only if camera is active
-        if (html5QrCode) {
-
-            html5QrCode.resume();
-
-        }
-
-    }, OVERLAY_DURATION);
-
-}
-
-
-
-// =====================================================
-// OVERLAY ENGINE
-// =====================================================
-
-function hideOverlay() {
-
-    result.style.display = "none";
-
-}
-function showProcessing() {
-
-    result.className = "result-overlay processing";
-
-    result.style.display = "flex";
-
-    statusIcon.textContent = "⏳";
-
-    resultTitle.textContent = "VERIFYING GUEST...";
-
-    guestName.textContent = "";
-
-    details.textContent = "Please wait...";
-
-}
-
-
-function showSuccess(data) {
-
-    result.className = "result-overlay success";
-
-    result.style.display = "flex";
-
-    statusIcon.textContent = "✓";
-
-    resultTitle.textContent = "CHECK-IN SUCCESSFUL";
-
-    guestName.textContent = data.name || "";
-
-    details.innerHTML =
-
-        `<strong>${data.registrationNumber || ""}</strong><br>
-         ${data.ticketType || ""}`;
-
-    playSuccessSound();
-
-}
-
-
-
-function showDuplicate(data) {
-
-    result.className = "result-overlay duplicate";
-
-    result.style.display = "flex";
-
-    statusIcon.textContent = "⚠";
-
-    resultTitle.textContent = "ALREADY CHECKED IN";
-
-    guestName.textContent = data.name || "";
-
-    details.innerHTML =
-
-        `<strong>${data.registrationNumber || ""}</strong><br>
-         ${data.ticketType || ""}<br><br>
-         Checked in at:<br>
-         <strong>${formatCheckinTime(data.checkinTime)}</strong>`;
-
-    playDuplicateSound();
-
-}
-
-
-
-function showInvalidQR() {
-
-    result.className = "result-overlay error";
-
-    result.style.display = "flex";
-
-    statusIcon.textContent = "✕";
-
-    resultTitle.textContent = "INVALID QR CODE";
-
-    guestName.textContent = "";
-
-    details.textContent =
-
-        "QR code not recognised.";
-
-    playInvalidSound();
-
-}
-
-
-
-function showSystemError() {
-
-    result.className = "result-overlay error";
-
-    result.style.display = "flex";
-
-    statusIcon.textContent = "⚠";
-
-    resultTitle.textContent = "SYSTEM ERROR";
-
-    guestName.textContent = "";
-
-    details.textContent =
-
-        "Unable to connect to Trakivent server.";
-
-    playInvalidSound();
-
+    // Intentionally ignored
 }
 // =====================================================
-// AUDIO ENGINE
-// =====================================================
-
-function playSuccessSound() {
-
-    playTone(880, 0.12, "sine");
-
-    setTimeout(function () {
-
-        playTone(1175, 0.12, "sine");
-
-    }, 130);
-
-}
-
-
-function playDuplicateSound() {
-
-    playTone(450, 0.18, "triangle");
-
-}
-
-
-function playInvalidSound() {
-
-    playTone(220, 0.18, "square");
-
-    setTimeout(function () {
-
-        playTone(180, 0.18, "square");
-
-    }, 180);
-
-}
-
-
-function playTone(frequency, duration, type) {
-
-    try {
-
-        const AudioContext =
-            window.AudioContext ||
-            window.webkitAudioContext;
-
-        const audioContext =
-            new AudioContext();
-
-        const oscillator =
-            audioContext.createOscillator();
-
-        const gainNode =
-            audioContext.createGain();
-
-        oscillator.type = type;
-
-        oscillator.frequency.value = frequency;
-
-        oscillator.connect(gainNode);
-
-        gainNode.connect(audioContext.destination);
-
-        gainNode.gain.setValueAtTime(
-            0.15,
-            audioContext.currentTime
-        );
-
-        oscillator.start();
-
-        oscillator.stop(
-            audioContext.currentTime + duration
-        );
-
-    }
-
-    catch {
-
-        console.log("Audio unavailable.");
-
-    }
-
-}
-
-
-
-// =====================================================
-// UTILITY FUNCTIONS
-// =====================================================
-
-function formatCheckinTime(timestamp) {
-
-    if (!timestamp) return "";
-
-    const date = new Date(timestamp);
-
-    return date.toLocaleString("en-GB", {
-
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true
-
-    });
-
-}
-
-
-
-// =====================================================
-// EVENT LISTENERS
+// EVENTS
 // =====================================================
 
 startScannerButton.addEventListener(
@@ -522,15 +224,319 @@ qrInput.addEventListener("keydown", function (event) {
     }
 
 });
-
-
-
 // =====================================================
-// INITIALISATION
+// API ENGINE
 // =====================================================
 
-window.addEventListener("load", function () {
+async function checkInGuest() {
 
-    qrInput.focus();
+    if (processing === false) {
 
-});
+        processing = true;
+
+    }
+
+    const token = qrInput.value.trim();
+
+    if (!token) {
+
+        showInvalidQR();
+
+        resumeScanningSession();
+
+        return;
+
+    }
+
+    showProcessing();
+
+    await processCheckIn(token);
+
+}
+
+
+async function processCheckIn(token) {
+
+    try {
+
+        const response = await fetch(
+
+            `${CONFIG.API_URL}?action=checkin&token=${encodeURIComponent(token)}`
+
+        );
+
+        const data = await response.json();
+
+        console.log(data);
+
+        if (data.success) {
+
+            showSuccess(data.guest);
+
+        }
+
+        else if (data.status === "duplicate") {
+
+            showDuplicate(data.guest);
+
+        }
+
+        else {
+
+            showInvalidQR();
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        showSystemError();
+
+    }
+
+    resumeScanningSession();
+
+}
+// =====================================================
+// SESSION MANAGER
+// =====================================================
+
+function resumeScanningSession() {
+
+    setTimeout(function () {
+
+        hideOverlay();
+
+        qrInput.value = "";
+
+        qrInput.focus();
+
+        processing = false;
+
+        if (scannerRunning && html5QrCode) {
+
+            html5QrCode.resume();
+
+        }
+
+    }, CONFIG.OVERLAY_DURATION);
+
+}
+// =====================================================
+// OVERLAY ENGINE
+// =====================================================
+
+function setOverlay(type) {
+
+    result.className = "result-overlay";
+
+    result.classList.add(type);
+
+    result.style.display = "flex";
+
+}
+
+function hideOverlay() {
+
+    result.style.display = "none";
+
+}
+
+function showProcessing() {
+
+    setOverlay("processing");
+
+    statusIcon.textContent = "⏳";
+
+    resultTitle.textContent = "VERIFYING GUEST...";
+
+    guestName.textContent = "";
+
+    details.textContent = "Please wait...";
+
+}
+
+function showSuccess(data) {
+
+    setOverlay("success");
+
+    statusIcon.textContent = "✓";
+
+    resultTitle.textContent = "CHECK-IN SUCCESSFUL";
+
+    guestName.textContent =
+        data.name || "";
+
+    details.innerHTML =
+        "<strong>" +
+        (data.registrationNumber || "") +
+        "</strong><br>" +
+        (data.ticketType || "");
+
+    playSuccessSound();
+
+}
+
+function showDuplicate(data) {
+
+    setOverlay("duplicate");
+
+    statusIcon.textContent = "⚠";
+
+    resultTitle.textContent = "ALREADY CHECKED IN";
+
+    guestName.textContent =
+        data.name || "";
+
+    details.innerHTML =
+        "<strong>" +
+        (data.registrationNumber || "") +
+        "</strong><br>" +
+        (data.ticketType || "") +
+        "<br><br>" +
+        "Checked in at:<br><strong>" +
+        formatTimestamp(data.checkinTime) +
+        "</strong>";
+
+    playDuplicateSound();
+
+}
+
+function showInvalidQR() {
+
+    setOverlay("error");
+
+    statusIcon.textContent = "✕";
+
+    resultTitle.textContent = "INVALID QR CODE";
+
+    guestName.textContent = "";
+
+    details.textContent =
+        "QR code not recognised.";
+
+    playInvalidSound();
+
+}
+
+function showSystemError() {
+
+    setOverlay("error");
+
+    statusIcon.textContent = "✕";
+
+    resultTitle.textContent = "SYSTEM ERROR";
+
+    guestName.textContent = "";
+
+    details.textContent =
+        "Unable to connect to the server.";
+
+    playErrorSound();
+
+}
+// =====================================================
+// AUDIO ENGINE
+// =====================================================
+
+function playSuccessSound() {
+
+    playTone(880, 0.12, "sine");
+
+    setTimeout(() => {
+
+        playTone(1175, 0.12, "sine");
+
+    }, 130);
+
+}
+
+
+function playDuplicateSound() {
+
+    playTone(450, 0.18, "triangle");
+
+}
+
+
+function playInvalidSound() {
+
+    playTone(220, 0.18, "square");
+
+    setTimeout(() => {
+
+        playTone(180, 0.18, "square");
+
+    }, 180);
+
+}
+
+
+function playErrorSound() {
+
+    playTone(160, 0.30, "sawtooth");
+
+}
+
+
+function playTone(frequency, duration, type) {
+
+    try {
+
+        const AudioContext =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
+        const ctx = new AudioContext();
+
+        const oscillator = ctx.createOscillator();
+
+        const gain = ctx.createGain();
+
+        oscillator.type = type;
+
+        oscillator.frequency.value = frequency;
+
+        oscillator.connect(gain);
+
+        gain.connect(ctx.destination);
+
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+
+        oscillator.start();
+
+        oscillator.stop(ctx.currentTime + duration);
+
+    }
+
+    catch (e) {
+
+        console.log("Audio unavailable.");
+
+    }
+
+}
+// =====================================================
+// UTILITIES
+// =====================================================
+
+function formatTimestamp(timestamp) {
+
+    if (!timestamp) return "";
+
+    const date = new Date(timestamp);
+
+    return date.toLocaleString("en-GB", {
+
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+
+    });
+
+}
