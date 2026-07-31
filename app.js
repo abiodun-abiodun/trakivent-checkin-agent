@@ -139,23 +139,47 @@ function checkInGuest() {
 
 }
 
-function processCheckIn(token) {
+async function processCheckIn(token) {
 
   console.log("Processing QR Token:", token);
 
-  // Temporary demo success
+  const API_URL = "https://script.google.com/macros/s/AKfycbw1dJq1BYbqAzonBP7V9plYfZFMChY_NGc1Pu2eFmTEXj69AWNBjPrPr22NUWYjwZSd/exec";
 
-  const guest = {
+  try {
 
-    name: "Demo Guest",
+    const response = await fetch(
+      `${API_URL}?action=checkin&token=${encodeURIComponent(token)}`
+    );
 
-    registrationNumber: token,
+    const result = await response.json();
 
-    ticketType: "VIP"
+    console.log(result);
 
-  };
+    if (result.success) {
 
-  showSuccess(guest);
+      showSuccess(result.guest);
+
+    } else {
+
+      if (result.status === "duplicate") {
+
+        showDuplicate(result.guest);
+
+      } else {
+
+        showInvalidQR();
+
+      }
+
+    }
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Unable to connect to Trakivent server.");
+
+  }
 
   resumeScanningSession();
 
@@ -247,7 +271,31 @@ result.style.display = 'flex';
   playSuccessSound();
 
 }
+function showDuplicate(data) {
 
+  result.className = 'result-overlay duplicate';
+
+  result.style.display = 'flex';
+
+  statusIcon.textContent = '⚠';
+
+  resultTitle.textContent =
+    'ALREADY CHECKED IN';
+
+  guestName.textContent =
+    data.name || '';
+
+  details.innerHTML =
+    '<strong>' +
+    (data.registrationNumber || '') +
+    '</strong><br>' +
+    (data.ticketType || '') +
+    '<br><br>' +
+    'Checked in at:<br><strong>' +
+    (data.checkinTime || '') +
+    '</strong>';
+
+}
 
 function showAlreadyCheckedIn(data) {
 
