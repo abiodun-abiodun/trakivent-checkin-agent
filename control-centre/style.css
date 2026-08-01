@@ -1,0 +1,350 @@
+/* =====================================
+   TRAKIVENT Event Control Centre
+   Version 0.4.5
+===================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial,Helvetica,sans-serif;
+
+    background:#f4f6f8;
+
+    color:#222;
+
+}
+
+.container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:30px;
+
+}
+
+header{
+
+    margin-bottom:30px;
+
+}
+
+header h1{
+
+    color:#0f6b3f;
+
+    font-size:34px;
+
+    margin-bottom:8px;
+
+}
+
+header p{
+
+    color:#666;
+
+}
+
+/* ==========================
+Dashboard Cards
+========================== */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+
+    gap:20px;
+
+    margin-bottom:30px;
+
+}
+
+.card{
+
+    background:#fff;
+
+    border-radius:12px;
+
+    padding:25px;
+
+    text-align:center;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+}
+
+.card h3{
+
+    color:#666;
+
+    font-size:15px;
+
+    margin-bottom:12px;
+
+}
+
+.card h2{
+
+    font-size:34px;
+
+    color:#111;
+
+}
+
+/* ==========================
+Progress
+========================== */
+
+.progressSection{
+
+    margin-bottom:35px;
+
+}
+
+.progressHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:10px;
+
+    font-weight:bold;
+
+}
+
+.progressBar{
+
+    width:100%;
+
+    height:16px;
+
+    background:#ddd;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+.progressFill{
+
+    width:0%;
+
+    height:100%;
+
+    background:#18a558;
+
+    transition:.4s;
+
+}
+
+/* ==========================
+Main Grid
+========================== */
+
+.mainGrid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:30px;
+
+}
+
+.leftPanel,
+.rightPanel{
+
+    background:#fff;
+
+    padding:25px;
+
+    border-radius:12px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+}
+
+.leftPanel h2,
+.rightPanel h2{
+
+    margin-bottom:20px;
+
+    color:#0f6b3f;
+
+}
+
+/* ==========================
+Feed
+========================== */
+
+.feedItem{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.feedGuest{
+
+    font-weight:bold;
+
+}
+
+.feedCategory{
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+.feedTime{
+
+    color:#666;
+
+    font-size:14px;
+
+}
+
+.emptyFeed{
+
+    color:#888;
+
+    text-align:center;
+
+    padding:30px;
+
+}
+
+/* ==========================
+Search
+========================== */
+
+.searchSection input{
+
+    width:100%;
+
+}
+
+#searchBox{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+
+    margin-bottom:20px;
+
+    font-size:16px;
+
+}
+
+#searchBox:focus{
+
+    outline:none;
+
+    border-color:#0f6b3f;
+
+}
+
+.searchResult{
+
+    min-height:220px;
+
+}
+
+.emptySearch{
+
+    color:#777;
+
+    text-align:center;
+
+    margin-top:60px;
+
+}
+
+.searchCard{
+
+    border:1px solid #eee;
+
+    border-radius:10px;
+
+    padding:20px;
+
+}
+
+.searchCard h3{
+
+    font-size:28px;
+
+    color:#0f6b3f;
+
+    margin-bottom:18px;
+
+}
+
+.searchCard p{
+
+    margin:10px 0;
+
+    font-size:16px;
+
+}
+
+.searchCard strong{
+
+    display:inline-block;
+
+    width:120px;
+
+}
+
+.statusChecked{
+
+    color:#18a558;
+
+    font-weight:bold;
+
+}
+
+.statusPending{
+
+    color:#d32f2f;
+
+    font-weight:bold;
+
+}
+
+/* ==========================
+Responsive
+========================== */
+
+@media(max-width:900px){
+
+.mainGrid{
+
+grid-template-columns:1fr;
+
+}
+
+}

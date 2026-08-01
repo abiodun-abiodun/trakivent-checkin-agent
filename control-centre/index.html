@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>TRAKIVENT Event Control Centre</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+<h1>TRAKIVENT</h1>
+
+<p id="eventName">
+
+Loading Event...
+
+</p>
+
+</header>
+
+<!-- =====================================
+Dashboard Cards
+===================================== -->
+
+<section class="cards">
+
+<div class="card">
+
+<h3>Expected Guests</h3>
+
+<h2 id="expectedGuests">0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Checked In</h3>
+
+<h2 id="checkedIn">0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Remaining</h3>
+
+<h2 id="remaining">0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Attendance</h3>
+
+<h2 id="attendance">0%</h2>
+
+</div>
+
+<div class="card">
+
+<h3>VIP</h3>
+
+<h2>
+
+<span id="vipChecked">0</span>
+
+/
+
+<span id="vipExpected">0</span>
+
+</h2>
+
+</div>
+
+</section>
+
+<!-- =====================================
+Attendance Progress
+===================================== -->
+
+<section class="progressSection">
+
+<div class="progressHeader">
+
+<span>Attendance Progress</span>
+
+<span id="attendanceLabel">
+
+0%
+
+</span>
+
+</div>
+
+<div class="progressBar">
+
+<div
+id="progressFill"
+class="progressFill">
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================
+Two-column Layout
+===================================== -->
+
+<div class="mainGrid">
+
+<!-- ============================= -->
+
+<div class="leftPanel">
+
+<h2>
+
+Live Event Feed
+
+</h2>
+
+<div
+id="recentFeed"
+class="feedContainer">
+
+<div class="emptyFeed">
+
+No recent check-ins.
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ============================= -->
+
+<div class="rightPanel">
+
+<h2>
+
+Guest Search
+
+</h2>
+
+<input
+
+id="searchBox"
+
+type="text"
+
+placeholder="Search by Name, QR or Registration Number"
+
+autocomplete="off"
+
+>
+
+<div
+
+id="searchResult"
+
+class="searchResult">
+
+<div class="emptySearch">
+
+Start typing to search...
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="dashboard.js"></script>
+
+</body>
+
+</html>
