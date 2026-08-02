@@ -122,69 +122,65 @@ Two-column Layout
 
 <div class="mainGrid">
 
-<!-- ============================= -->
+    <!-- Guest List -->
 
-<div class="leftPanel">
+    <div class="leftPanel">
 
-<h2>
+        <h2>Guest List</h2>
 
-Live Event Feed
+        <div id="guestList" class="guestList">
 
-</h2>
+            <div class="emptyFeed">
 
-<div
-id="recentFeed"
-class="feedContainer">
+                Loading guests...
 
-<div class="emptyFeed">
+            </div>
 
-No recent check-ins.
+        </div>
 
-</div>
+    </div>
 
-</div>
+    <!-- Live Feed -->
 
-</div>
+    <div class="middlePanel">
 
-<!-- ============================= -->
+        <h2>Live Event Feed</h2>
 
-<div class="rightPanel">
+        <div id="recentFeed" class="feedContainer">
 
-<h2>
+            <div class="emptyFeed">
 
-Guest Search
+                No recent check-ins.
 
-</h2>
+            </div>
 
-<input
+        </div>
 
-id="searchBox"
+    </div>
 
-type="text"
+    <!-- Guest Search -->
 
-placeholder="Search by Name, QR or Registration Number"
+    <div class="rightPanel">
 
-autocomplete="off"
+        <h2>Guest Search</h2>
 
->
+        <input
+            id="searchBox"
+            type="text"
+            placeholder="Search by Name, QR or Registration Number"
+            autocomplete="off">
 
-<div
+        <div id="searchResult" class="searchResult">
 
-id="searchResult"
+            <div class="emptySearch">
 
-class="searchResult">
+                Start typing to search...
 
-<div class="emptySearch">
+            </div>
 
-Start typing to search...
+        </div>
 
-</div>
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </div>
 

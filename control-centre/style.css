@@ -155,13 +155,16 @@ Main Grid
 
     display:grid;
 
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:320px 1fr 380px;
 
-    gap:30px;
+    gap:24px;
+
+    align-items:start;
 
 }
 
 .leftPanel,
+.middlePanel,
 .rightPanel{
 
     background:#fff;
@@ -237,25 +240,19 @@ Feed
 Search
 ========================== */
 
-.searchSection input{
-
-    width:100%;
-
-}
-
 #searchBox{
 
     width:100%;
 
-    padding:14px;
+    padding:14px 18px;
 
     border:1px solid #ddd;
 
-    border-radius:8px;
-
-    margin-bottom:20px;
+    border-radius:10px;
 
     font-size:16px;
+
+    margin-bottom:25px;
 
 }
 
@@ -265,57 +262,167 @@ Search
 
     border-color:#0f6b3f;
 
+    box-shadow:0 0 0 3px rgba(15,107,63,.15);
+
 }
 
 .searchResult{
 
-    min-height:220px;
+    min-height:260px;
 
 }
 
 .emptySearch{
 
-    color:#777;
-
     text-align:center;
 
-    margin-top:60px;
+    color:#888;
+
+    margin-top:70px;
 
 }
+
+/* Guest Card */
 
 .searchCard{
 
-    border:1px solid #eee;
+    border:1px solid #e7e7e7;
 
-    border-radius:10px;
+    border-radius:14px;
 
-    padding:20px;
+    padding:22px;
 
-}
-
-.searchCard h3{
-
-    font-size:28px;
-
-    color:#0f6b3f;
-
-    margin-bottom:18px;
+    background:#fafafa;
 
 }
 
-.searchCard p{
+.guestHeader{
 
-    margin:10px 0;
+    display:flex;
 
-    font-size:16px;
+    align-items:center;
+
+    gap:16px;
+
+    margin-bottom:22px;
 
 }
 
-.searchCard strong{
+.guestAvatar{
 
-    display:inline-block;
+    width:68px;
 
-    width:120px;
+    height:68px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#0f6b3f,#18a558);
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:26px;
+
+    font-weight:bold;
+
+    box-shadow:0 6px 14px rgba(0,0,0,.15);
+
+}
+
+.guestIdentity h3{
+
+    margin-bottom:8px;
+
+    color:#222;
+
+}
+
+/* ==========================
+Ticket Badges
+========================== */
+
+.ticketBadge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:7px 14px;
+
+    border-radius:25px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+    text-transform:uppercase;
+
+    color:white;
+
+}
+
+.ticket-vip{
+
+    background:linear-gradient(135deg,#18a558,#0f6b3f);
+
+}
+
+.ticket-regular{
+
+    background:linear-gradient(135deg,#1976d2,#0d47a1);
+
+}
+
+.ticket-staff{
+
+    background:linear-gradient(135deg,#8e24aa,#5e35b1);
+
+}
+
+.ticket-vendor{
+
+    background:linear-gradient(135deg,#ef6c00,#e65100);
+
+}
+
+.guestInfo{
+
+    display:grid;
+
+    gap:14px;
+
+    margin-bottom:24px;
+
+}
+
+.infoRow{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding-bottom:10px;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.label{
+
+    color:#777;
+
+    font-weight:bold;
 
 }
 
@@ -335,16 +442,226 @@ Search
 
 }
 
-/* ==========================
-Responsive
-========================== */
+.guestActions{
 
-@media(max-width:900px){
-
-.mainGrid{
-
-grid-template-columns:1fr;
+    margin-top:18px;
 
 }
+
+.checkinBtn,
+.undoBtn{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+
+}
+
+.checkinBtn{
+
+    background:#18a558;
+
+    color:white;
+
+}
+
+.checkinBtn:hover{
+
+    transform:translateY(-2px);
+
+    background:#14854a;
+
+}
+
+.undoBtn{
+
+    background:#ef6c00;
+
+    color:white;
+
+}
+
+.undoBtn:hover{
+
+    transform:translateY(-2px);
+
+    background:#d85d00;
+
+}/* =====================================
+Responsive Layout
+===================================== */
+
+@media (max-width: 768px){
+
+    .mainGrid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+/* ==========================
+Guest List
+========================== */
+
+.guestItem{
+
+    padding:14px;
+
+    border-bottom:1px solid #eee;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.guestItem:hover{
+
+    background:#f7faf9;
+
+}
+
+.guestName{
+
+    font-weight:bold;
+
+    color:#222;
+
+}
+
+.guestTicket{
+
+    font-size:13px;
+
+    color:#666;
+
+}
+
+/* ==========================
+Active Guest
+========================== */
+
+.activeGuest{
+
+    background:#eaf8f0;
+
+    border-left:6px solid #18a558;
+
+    transform:translateX(4px);
+
+}
+
+.activeGuest .guestName{
+
+    color:#0f6b3f;
+
+}
+
+/* ==========================
+Guest List Row
+========================== */
+
+.guestRow{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.guestStatusIn{
+
+    color:#18a558;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+}
+
+.guestStatusOut{
+
+    color:#d9534f;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+}
+
+/* ==========================
+Guest Groups
+========================== */
+
+.groupHeader{
+
+    background:#f4f8f6;
+
+    color:#0f6b3f;
+
+    font-weight:bold;
+
+    padding:10px 14px;
+
+    margin-top:14px;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+    letter-spacing:.5px;
+
+}
+
+/* ==========================
+Ticket Colours
+========================== */
+
+.ticket-vip{
+
+    color:#18a558;
+
+    font-weight:bold;
+
+}
+
+.ticket-regular{
+
+    color:#1976d2;
+
+    font-weight:bold;
+
+}
+
+.ticket-staff{
+
+    color:#8e44ad;
+
+    font-weight:bold;
+
+}
+
+.ticket-vendor{
+
+    color:#f57c00;
+
+    font-weight:bold;
 
 }

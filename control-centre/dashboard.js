@@ -149,6 +149,152 @@ async function loadRecentFeed() {
 }
 
 // =====================================
+// Guest List
+// =====================================
+
+async function loadGuestList() {
+
+    try {
+
+        const response =
+            await fetch(`${API_URL}?action=guestlist`);
+
+        const data =
+            await response.json();
+
+        const guestList =
+            document.getElementById("guestList");
+
+        guestList.innerHTML = "";
+
+        if (!data.success) {
+
+            guestList.innerHTML =
+                "<div class='emptyFeed'>No guests found.</div>";
+
+            return;
+
+        }
+
+        const groups = {
+
+            VIP: [],
+            Regular: [],
+            Staff: [],
+            Vendor: []
+
+        };
+
+        data.guests.forEach(function(guest){
+
+            if(groups[guest.ticketType]){
+
+                groups[guest.ticketType].push(guest);
+
+            }
+
+        });
+
+        Object.keys(groups).forEach(function(type){
+
+            if(groups[type].length===0) return;
+
+            const icons = {
+
+    VIP: "👑",
+
+    Regular: "👤",
+
+    Staff: "🛠",
+
+    Vendor: "🏪"
+
+};
+
+const header =
+    document.createElement("div");
+
+header.className =
+    "groupHeader";
+
+header.innerHTML =
+    `${icons[type]} ${type.toUpperCase()} (${groups[type].length})`;
+
+            guestList.appendChild(header);
+
+            groups[type].forEach(function(guest){
+
+                const item =
+                    document.createElement("div");
+
+                item.className="guestItem";
+
+                item.innerHTML=`
+
+                <div class="guestRow">
+
+                    <div>
+
+                        <div class="guestName">
+
+                            ${guest.fullName}
+
+                        </div>
+
+                        <div class="guestTicket ticket-${guest.ticketType.toLowerCase()}">
+
+    ${guest.registrationNo}
+
+</div>
+
+                    </div>
+
+                    <div class="${guest.checkedIn ? "guestStatusIn" : "guestStatusOut"}">
+
+                        ${guest.checkedIn ? "✓" : "•"}
+
+                    </div>
+
+                </div>
+
+                `;
+
+                item.addEventListener("click",function(){
+
+                    document
+                    .querySelectorAll(".guestItem")
+                    .forEach(function(g){
+
+                        g.classList.remove("activeGuest");
+
+                    });
+
+                    item.classList.add("activeGuest");
+
+                    document.getElementById("searchBox").value =
+                        guest.registrationNo;
+
+                    searchGuest(guest.registrationNo);
+
+                });
+
+                guestList.appendChild(item);
+
+            });
+
+        });
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+// =====================================
 // Guest Search
 // =====================================
 
@@ -160,13 +306,9 @@ async function searchGuest(query) {
     if (query.trim() === "") {
 
         result.innerHTML = `
-
             <div class="emptySearch">
-
                 Start typing to search...
-
             </div>
-
         `;
 
         return;
@@ -186,57 +328,143 @@ async function searchGuest(query) {
         if (!data.success || data.count === 0) {
 
             result.innerHTML = `
-
                 <div class="emptySearch">
-
                     No guest found.
-
                 </div>
-
             `;
 
             return;
 
         }
 
-        const guest =
-            data.guests[0];
+        const guest = data.guests[0];
+
+        const statusBadge =
+            guest.checkedIn
+                ? `<span class="statusChecked">✅ CHECKED IN</span>`
+                : `<span class="statusPending">⏳ PENDING</span>`;
+
+        const actionButton =
+            guest.checkedIn
+                ? `
+                    <button
+                        class="undoBtn"
+                        onclick="undoGuest('${guest.qrToken}')">
+                        Undo Check-in
+                    </button>
+                  `
+                : `
+                    <button
+                        class="checkinBtn"
+                        onclick="checkinGuest('${guest.qrToken}')">
+                        Check In
+                    </button>
+                  `;
 
         result.innerHTML = `
 
-            <div class="searchCard">
+<div class="searchCard">
 
-                <h3>${guest.fullName}</h3>
+    <div class="guestHeader">
 
-                <p><strong>Registration:</strong> ${guest.registrationNo}</p>
+        <div class="guestAvatar">
 
-                <p><strong>Ticket:</strong> ${guest.ticketType}</p>
+            ${guest.fullName
+                .split(" ")
+                .map(n => n[0])
+                .join("")
+                .substring(0,2)
+                .toUpperCase()}
 
-                <p><strong>Category:</strong> ${guest.guestCategory || "-"}</p>
+        </div>
 
-                <p><strong>Table:</strong> ${guest.tableNumber || "-"}</p>
+        <div class="guestIdentity">
 
-                <p>
+            <h3>${guest.fullName}</h3>
 
-                    <strong>Status:</strong>
+            <span class="ticketBadge ticket-${guest.ticketType.toLowerCase()}">
 
-                    <span class="${guest.checkedIn ? "statusChecked" : "statusPending"}">
+                ${guest.ticketType}
 
-                        ${guest.checkedIn ? "✅ Checked In" : "⏳ Pending"}
+            </span>
 
-                    </span>
+        </div>
 
-                </p>
+    </div>
+
+    <div class="guestInfo">
+
+        <div class="infoRow">
+
+            <span class="label">Registration</span>
+
+            <span>${guest.registrationNo}</span>
+
+        </div>
+
+        <div class="infoRow">
+
+            <span class="label">Category</span>
+
+            <span>${guest.guestCategory || "-"}</span>
+
+        </div>
+
+        <div class="infoRow">
+
+            <span class="label">Table</span>
+
+            <span>${guest.tableNumber || "-"}</span>
+
+        </div>
+
+        <div class="infoRow">
+
+            <span class="label">Status</span>
+
+            <span>${statusBadge}</span>
+
+        </div>
+
+        ${
+            guest.checkedIn
+            ? `
+            <div class="infoRow">
+
+                <span class="label">
+
+                    Checked In
+
+                </span>
+
+                <span>
+
+                    ${new Date(guest.checkinTime).toLocaleString()}
+
+                </span>
 
             </div>
+            `
+            : ""
+        }
 
-        `;
+    </div>
+
+    <div class="guestActions">
+
+        ${actionButton}
+
+    </div>
+
+</div>
+
+`;
 
     }
 
-    catch (error) {
+    catch(error){
 
-        console.error("Search Error:", error);
+        console.error(error);
 
     }
 
@@ -264,8 +492,169 @@ async function refreshDashboard() {
 
     await loadRecentFeed();
 
+    await loadGuestList();
+
 }
 
 refreshDashboard();
 
 setInterval(refreshDashboard, 5000);
+// =====================================
+// Manual Check In
+// =====================================
+
+async function checkinGuest(token){
+
+    try{
+
+        const response =
+            await fetch(
+                `${API_URL}?action=manualcheckin&token=${token}`
+            );
+
+        const data =
+            await response.json();
+
+        if(data.success){
+
+            await refreshDashboard();
+
+            searchGuest(token);
+
+        }else{
+
+            alert(data.message || "Unable to check in guest.");
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+// =====================================
+// Undo Check In
+// =====================================
+
+async function undoGuest(token){
+
+    try{
+
+        const response =
+            await fetch(
+                `${API_URL}?action=undocheckin&token=${token}`
+            );
+
+        const data =
+            await response.json();
+
+        if(data.success){
+
+            await refreshDashboard();
+
+            searchGuest(token);
+
+        }else{
+
+            alert(data.message || "Unable to undo check-in.");
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+// =====================================
+// Manual Check-in
+// =====================================
+
+async function checkinGuest(token){
+
+    try{
+
+        const response =
+            await fetch(
+                `${API_URL}?action=manualcheckin&token=${encodeURIComponent(token)}`
+            );
+
+        const data =
+            await response.json();
+
+        if(!data.success){
+
+            alert(data.message || "Unable to check in guest.");
+
+            return;
+
+        }
+
+        // Refresh dashboard
+
+        await refreshDashboard();
+
+        // Refresh guest card
+
+        searchGuest(
+            data.guest.registrationNo
+        );
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+// =====================================
+// Undo Check-in
+// =====================================
+
+async function undoGuest(token){
+
+    try{
+
+        const response =
+            await fetch(
+                `${API_URL}?action=undocheckin&token=${encodeURIComponent(token)}`
+            );
+
+        const data =
+            await response.json();
+
+        if(!data.success){
+
+            alert(data.message || "Unable to undo check-in.");
+
+            return;
+
+        }
+
+        await refreshDashboard();
+
+        searchGuest(
+            data.guest.registrationNo
+        );
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}
