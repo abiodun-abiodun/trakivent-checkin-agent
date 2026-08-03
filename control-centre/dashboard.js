@@ -185,9 +185,18 @@ async function loadGuestList() {
 
         };
 
-        data.guests.forEach(function(guest){
+        const icons = {
 
-            if(groups[guest.ticketType]){
+            VIP: "👑",
+            Regular: "👤",
+            Staff: "🛠",
+            Vendor: "🏪"
+
+        };
+
+        data.guests.forEach(function (guest) {
+
+            if (groups[guest.ticketType]) {
 
                 groups[guest.ticketType].push(guest);
 
@@ -195,79 +204,75 @@ async function loadGuestList() {
 
         });
 
-        Object.keys(groups).forEach(function(type){
+        Object.keys(groups).forEach(function (type) {
 
-            if(groups[type].length===0) return;
+            if (groups[type].length === 0) return;
 
-            const icons = {
+            // Pending first
+            groups[type].sort(function(a, b){
 
-    VIP: "👑",
+                if(a.checkedIn === b.checkedIn) return 0;
 
-    Regular: "👤",
+                return a.checkedIn ? 1 : -1;
 
-    Staff: "🛠",
+            });
 
-    Vendor: "🏪"
+            const header =
+                document.createElement("div");
 
-};
+            header.className = "groupHeader";
 
-const header =
-    document.createElement("div");
-
-header.className =
-    "groupHeader";
-
-header.innerHTML =
-    `${icons[type]} ${type.toUpperCase()} (${groups[type].length})`;
+            header.innerHTML =
+                `${icons[type]} ${type.toUpperCase()} (${groups[type].length})`;
 
             guestList.appendChild(header);
 
-            groups[type].forEach(function(guest){
+            groups[type].forEach(function (guest) {
 
                 const item =
                     document.createElement("div");
 
-                item.className="guestItem";
+                item.className = "guestItem";
 
-                item.innerHTML=`
+                item.innerHTML = `
 
-                <div class="guestRow">
+                    <div class="guestRow">
 
-                    <div>
+                        <div>
 
-                        <div class="guestName">
+                            <div class="guestName">
 
-                            ${guest.fullName}
+                                ${guest.fullName}
+
+                            </div>
+
+                            <div class="guestTicket ticket-${guest.ticketType.toLowerCase()}">
+
+                                ${guest.registrationNo}
+
+                            </div>
 
                         </div>
 
-                        <div class="guestTicket ticket-${guest.ticketType.toLowerCase()}">
+                        <div class="${guest.checkedIn ? "guestStatusIn" : "guestStatusOut"}">
 
-    ${guest.registrationNo}
+                            ${guest.checkedIn ? "✓" : "●"}
 
-</div>
-
-                    </div>
-
-                    <div class="${guest.checkedIn ? "guestStatusIn" : "guestStatusOut"}">
-
-                        ${guest.checkedIn ? "✓" : "•"}
+                        </div>
 
                     </div>
-
-                </div>
 
                 `;
 
-                item.addEventListener("click",function(){
+                item.addEventListener("click", function () {
 
                     document
-                    .querySelectorAll(".guestItem")
-                    .forEach(function(g){
+                        .querySelectorAll(".guestItem")
+                        .forEach(function (g) {
 
-                        g.classList.remove("activeGuest");
+                            g.classList.remove("activeGuest");
 
-                    });
+                        });
 
                     item.classList.add("activeGuest");
 
@@ -286,9 +291,9 @@ header.innerHTML =
 
     }
 
-    catch(error){
+    catch (error) {
 
-        console.error(error);
+        console.error("Guest List:", error);
 
     }
 
@@ -483,16 +488,20 @@ document
 });
 
 // =====================================
-// Auto Refresh
+// Refresh Entire Control Centre
 // =====================================
 
 async function refreshDashboard() {
 
-    await loadDashboard();
+    await Promise.all([
 
-    await loadRecentFeed();
+        loadDashboard(),
 
-    await loadGuestList();
+        loadRecentFeed(),
+
+        loadGuestList()
+
+    ]);
 
 }
 
