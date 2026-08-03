@@ -126,19 +126,29 @@ Two-column Layout
 
     <div class="leftPanel">
 
-        <h2>Guest List</h2>
+       <h2>Guest List</h2>
 
-        <div id="guestList" class="guestList">
+<div class="guestFilters">
 
-            <div class="emptyFeed">
+    <button class="filterBtn activeFilter" data-filter="all">
 
-                Loading guests...
+        All
 
-            </div>
+    </button>
 
-        </div>
+    <button class="filterBtn" data-filter="pending">
 
-    </div>
+        Pending
+
+    </button>
+
+    <button class="filterBtn" data-filter="checked">
+
+        Checked In
+
+    </button>
+
+</div>
 
     <!-- Live Feed -->
 
@@ -184,6 +194,12 @@ Two-column Layout
 
 </div>
 
+<script src="dashboard-core.js"></script>
+<script src="dashboard-api.js"></script>
+<script src="dashboard-dashboard.js"></script>
+<script src="dashboard-feed.js"></script>
+<script src="dashboard-search.js"></script>
+<script src="dashboard-list.js"></script>
 <script src="dashboard.js"></script>
 
 </body>

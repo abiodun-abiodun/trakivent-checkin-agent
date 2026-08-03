@@ -8,6 +8,8 @@
 const API_URL =
 "https://script.google.com/macros/s/AKfycbx-PZRxcXfgbz09VGvQJYc34Cpv6hro1XJb_8oNcEOOIwTIDjpukz6KStuM2St1u_-2/exec";
 
+let guestFilter = "all";
+
 // =====================================
 // Dashboard Overview
 // =====================================
@@ -219,74 +221,100 @@ async function loadGuestList() {
 
             const header =
                 document.createElement("div");
+header.className =
+`groupHeader group-${type.toLowerCase()}`;
 
-            header.className = "groupHeader";
+header.innerHTML = `
 
-            header.innerHTML =
-                `${icons[type]} ${type.toUpperCase()} (${groups[type].length})`;
+<span>
+
+${icons[type]} ${type.toUpperCase()}
+
+</span>
+
+<span>
+
+${groups[type].length} Guest${groups[type].length>1?"s":""}
+
+</span>
+
+`;
 
             guestList.appendChild(header);
 
-            groups[type].forEach(function (guest) {
+            let guestsToShow = groups[type];
 
-                const item =
-                    document.createElement("div");
+if (guestFilter === "pending") {
 
-                item.className = "guestItem";
+    guestsToShow =
+        guestsToShow.filter(g => !g.checkedIn);
 
-                item.innerHTML = `
+}
 
-                    <div class="guestRow">
+if (guestFilter === "checked") {
 
-                        <div>
+    guestsToShow =
+        guestsToShow.filter(g => g.checkedIn);
 
-                            <div class="guestName">
+}
 
-                                ${guest.fullName}
+if (guestsToShow.length === 0) return;
 
-                            </div>
+guestsToShow.forEach(function (guest) {
 
-                            <div class="guestTicket ticket-${guest.ticketType.toLowerCase()}">
+    const item =
+        document.createElement("div");
 
-                                ${guest.registrationNo}
+    item.className = "guestItem";
 
-                            </div>
+    item.innerHTML = `
 
-                        </div>
+        <div class="guestRow">
 
-                        <div class="${guest.checkedIn ? "guestStatusIn" : "guestStatusOut"}">
+            <div>
 
-                            ${guest.checkedIn ? "✓" : "●"}
+                <div class="guestName">
 
-                        </div>
+                    ${guest.fullName}
 
-                    </div>
+                </div>
 
-                `;
+                <div class="guestTicket ticket-${guest.ticketType.toLowerCase()}">
 
-                item.addEventListener("click", function () {
+                    ${guest.registrationNo}
 
-                    document
-                        .querySelectorAll(".guestItem")
-                        .forEach(function (g) {
+                </div>
 
-                            g.classList.remove("activeGuest");
+            </div>
 
-                        });
+            <div class="${guest.checkedIn ? "guestStatusIn" : "guestStatusOut"}"></div>
 
-                    item.classList.add("activeGuest");
+        </div>
 
-                    document.getElementById("searchBox").value =
-                        guest.registrationNo;
+    `;
 
-                    searchGuest(guest.registrationNo);
+    item.addEventListener("click", function(){
 
-                });
+        document
+            .querySelectorAll(".guestItem")
+            .forEach(function(g){
 
-                guestList.appendChild(item);
+                g.classList.remove("activeGuest");
 
             });
 
+        item.classList.add("activeGuest");
+
+        document.getElementById("searchBox").value =
+            guest.registrationNo;
+
+        searchGuest(guest.registrationNo);
+
+    });
+
+    guestList.appendChild(item);
+
+});
         });
 
     }
@@ -311,9 +339,13 @@ async function searchGuest(query) {
     if (query.trim() === "") {
 
         result.innerHTML = `
+
             <div class="emptySearch">
+
                 Start typing to search...
+
             </div>
+
         `;
 
         return;
@@ -333,61 +365,76 @@ async function searchGuest(query) {
         if (!data.success || data.count === 0) {
 
             result.innerHTML = `
+
                 <div class="emptySearch">
+
                     No guest found.
+
                 </div>
+
             `;
 
             return;
 
         }
 
-        const guest = data.guests[0];
+        const guest =
+            data.guests[0];
+
+        const initials =
+            guest.fullName
+                .split(" ")
+                .map(n => n[0])
+                .join("")
+                .substring(0,2)
+                .toUpperCase();
+
+        const badgeClass =
+            "ticket-" + guest.ticketType.toLowerCase();
 
         const statusBadge =
             guest.checkedIn
-                ? `<span class="statusChecked">✅ CHECKED IN</span>`
-                : `<span class="statusPending">⏳ PENDING</span>`;
+            ? '<span class="statusChecked">🟢 Checked In</span>'
+            : '<span class="statusPending">🔴 Pending</span>';
 
         const actionButton =
             guest.checkedIn
-                ? `
-                    <button
-                        class="undoBtn"
-                        onclick="undoGuest('${guest.qrToken}')">
-                        Undo Check-in
-                    </button>
-                  `
-                : `
-                    <button
-                        class="checkinBtn"
-                        onclick="checkinGuest('${guest.qrToken}')">
-                        Check In
-                    </button>
-                  `;
+            ? `
+                <button
+                    class="undoBtn"
+                    onclick="undoGuest('${guest.qrToken}')">
+
+                    ↩ Undo Check-In
+
+                </button>
+              `
+            : `
+                <button
+                    class="checkinBtn"
+                    onclick="checkinGuest('${guest.qrToken}')">
+
+                    ✔ Check In
+
+                </button>
+              `;
 
         result.innerHTML = `
 
 <div class="searchCard">
 
-    <div class="guestHeader">
+    <div class="profileHeader">
 
-        <div class="guestAvatar">
+        <div class="profileAvatar">
 
-            ${guest.fullName
-                .split(" ")
-                .map(n => n[0])
-                .join("")
-                .substring(0,2)
-                .toUpperCase()}
+            ${initials}
 
         </div>
 
-        <div class="guestIdentity">
+        <div class="profileIdentity">
 
-            <h3>${guest.fullName}</h3>
+            <h2>${guest.fullName}</h2>
 
-            <span class="ticketBadge ticket-${guest.ticketType.toLowerCase()}">
+            <span class="ticketBadge ${badgeClass}">
 
                 ${guest.ticketType}
 
@@ -397,7 +444,7 @@ async function searchGuest(query) {
 
     </div>
 
-    <div class="guestInfo">
+    <div class="profileBody">
 
         <div class="infoRow">
 
@@ -438,7 +485,7 @@ async function searchGuest(query) {
 
                 <span class="label">
 
-                    Checked In
+                    Check-in Time
 
                 </span>
 
@@ -455,7 +502,7 @@ async function searchGuest(query) {
 
     </div>
 
-    <div class="guestActions">
+    <div class="profileActions">
 
         ${actionButton}
 
@@ -469,7 +516,7 @@ async function searchGuest(query) {
 
     catch(error){
 
-        console.error(error);
+        console.error("Search:", error);
 
     }
 

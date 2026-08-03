@@ -538,9 +538,13 @@ Guest List
 
 .guestName{
 
-    font-weight:bold;
+    font-size:16px;
+
+    font-weight:700;
 
     color:#222;
+
+    margin-bottom:4px;
 
 }
 
@@ -548,7 +552,9 @@ Guest List
 
     font-size:13px;
 
-    color:#666;
+    opacity:.85;
+
+    letter-spacing:.4px;
 
 }
 
@@ -588,45 +594,78 @@ Guest List Row
 
 .guestStatusIn{
 
-    color:#18a558;
+    width:16px;
 
-    font-size:22px;
+    height:16px;
 
-    font-weight:bold;
+    border-radius:50%;
+
+    background:#18a558;
 
 }
 
 .guestStatusOut{
 
-    color:#d9534f;
+    width:16px;
 
-    font-size:24px;
+    height:16px;
 
-    font-weight:bold;
+    border-radius:50%;
+
+    background:#d9534f;
 
 }
 
 /* ==========================
-Guest Groups
+Guest Group Headers
 ========================== */
 
 .groupHeader{
 
-    background:#f4f8f6;
+    display:flex;
 
-    color:#0f6b3f;
+    justify-content:space-between;
 
-    font-weight:bold;
+    align-items:center;
 
-    padding:10px 14px;
+    padding:12px 16px;
 
-    margin-top:14px;
+    margin-top:18px;
 
-    border-radius:8px;
+    margin-bottom:8px;
 
-    font-size:14px;
+    border-radius:10px;
 
-    letter-spacing:.5px;
+    font-size:15px;
+
+    font-weight:700;
+
+    letter-spacing:.4px;
+
+    color:#fff;
+
+}
+.group-vip{
+
+    background:#18a558;
+
+}
+
+.group-regular{
+
+    background:#1976d2;
+
+}
+
+.group-staff{
+
+    background:#8e44ad;
+
+}
+
+.group-vendor{
+
+    background:#f57c00;
 
 }
 
@@ -663,5 +702,278 @@ Ticket Colours
     color:#f57c00;
 
     font-weight:bold;
+
+}
+
+/* ==========================
+Guest Items
+========================== */
+
+.guestItem{
+
+    background:#ffffff;
+
+    border:1px solid #ececec;
+
+    border-radius:10px;
+
+    padding:14px 16px;
+
+    margin-bottom:10px;
+
+    cursor:pointer;
+
+    transition:all .25s ease;
+
+}
+
+.guestItem:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 18px rgba(0,0,0,.10);
+
+    border-color:#18a558;
+
+}
+
+.activeGuest{
+
+    background:#eefaf3;
+
+    border:2px solid #18a558;
+
+    box-shadow:0 8px 18px rgba(24,165,88,.20);
+
+}
+
+/* =====================================
+Premium Guest Details Card
+===================================== */
+
+.profileHeader{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:24px;
+
+}
+
+.profileAvatar{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:50%;
+
+    background:#0f6b3f;
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    flex-shrink:0;
+
+}
+
+.profileIdentity h2{
+
+    margin:0;
+
+    font-size:26px;
+
+    color:#222;
+
+}
+
+.profileBody{
+
+    margin-top:20px;
+
+}
+
+.infoRow{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.label{
+
+    font-weight:600;
+
+    color:#666;
+
+}
+
+.profileActions{
+
+    margin-top:28px;
+
+}
+
+.checkinBtn,
+.undoBtn{
+
+    width:100%;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.checkinBtn{
+
+    background:#18a558;
+
+    color:#fff;
+
+}
+
+.checkinBtn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 20px rgba(24,165,88,.25);
+
+}
+
+.undoBtn{
+
+    background:#f57c00;
+
+    color:#fff;
+
+}
+
+.undoBtn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 20px rgba(245,124,0,.25);
+
+}
+
+.ticketBadge{
+
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    margin-top:8px;
+
+}
+
+.ticket-vip{
+
+    background:#18a558;
+
+}
+
+.ticket-regular{
+
+    background:#1976d2;
+
+}
+
+.ticket-staff{
+
+    background:#8e44ad;
+
+}
+
+.ticket-vendor{
+
+    background:#f57c00;
+
+}
+
+/* =====================================
+Guest Filters
+===================================== */
+
+.guestFilters{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-bottom:20px;
+
+}
+
+.filterBtn{
+
+    flex:1;
+
+    padding:10px 14px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#ececec;
+
+    color:#555;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.filterBtn:hover{
+
+    background:#d9d9d9;
+
+}
+
+.activeFilter{
+
+    background:#0f6b3f;
+
+    color:#fff;
 
 }
