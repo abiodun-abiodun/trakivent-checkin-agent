@@ -208,41 +208,16 @@ async function loadGuestList() {
 
         Object.keys(groups).forEach(function (type) {
 
-            if (groups[type].length === 0) return;
-
             // Pending first
-            groups[type].sort(function(a, b){
+groups[type].sort(function(a, b){
 
-                if(a.checkedIn === b.checkedIn) return 0;
+    if(a.checkedIn === b.checkedIn) return 0;
 
-                return a.checkedIn ? 1 : -1;
+    return a.checkedIn ? 1 : -1;
 
-            });
+});
 
-            const header =
-                document.createElement("div");
-header.className =
-`groupHeader group-${type.toLowerCase()}`;
-
-header.innerHTML = `
-
-<span>
-
-${icons[type]} ${type.toUpperCase()}
-
-</span>
-
-<span>
-
-${groups[type].length} Guest${groups[type].length>1?"s":""}
-
-</span>
-
-`;
-
-            guestList.appendChild(header);
-
-            let guestsToShow = groups[type];
+let guestsToShow = groups[type];
 
 if (guestFilter === "pending") {
 
@@ -259,6 +234,30 @@ if (guestFilter === "checked") {
 }
 
 if (guestsToShow.length === 0) return;
+
+const header =
+    document.createElement("div");
+
+header.className =
+`groupHeader group-${type.toLowerCase()}`;
+
+header.innerHTML = `
+
+<span>
+
+${icons[type]} ${type.toUpperCase()}
+
+</span>
+
+<span>
+
+${guestsToShow.length} Guest${guestsToShow.length > 1 ? "s" : ""}
+
+</span>
+
+`;
+
+guestList.appendChild(header);
 
 guestsToShow.forEach(function (guest) {
 
@@ -714,3 +713,32 @@ async function undoGuest(token){
     }
 
 }
+
+// ======================================
+// Guest Filters
+// ======================================
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".filterBtn").forEach(function (btn) {
+
+        btn.addEventListener("click", function () {
+
+            document.querySelectorAll(".filterBtn").forEach(function (b) {
+
+                b.classList.remove("activeFilter");
+
+            });
+
+            this.classList.add("activeFilter");
+
+            guestFilter = this.dataset.filter;
+
+            loadGuestList();
+
+        });
+
+    });
+
+});
