@@ -833,6 +833,7 @@ Premium Guest Details Card
 
 }
 
+
 .checkinBtn,
 .undoBtn{
 
@@ -975,5 +976,364 @@ Guest Filters
     background:#0f6b3f;
 
     color:#fff;
+
+}
+
+/* ============================
+   TRAKIVENT Loading Spinner
+============================ */
+
+.spinner{
+
+    width:14px;
+    height:14px;
+
+    border:2px solid rgba(255,255,255,.35);
+
+    border-top-color:#fff;
+
+    border-radius:50%;
+
+    display:inline-block;
+
+    margin-right:8px;
+
+    animation:spin .7s linear infinite;
+
+    vertical-align:middle;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* ============================
+   TRAKIVENT Success Animation
+============================ */
+
+.checkSuccess{
+
+    animation:successFlash .45s ease;
+
+}
+
+@keyframes successFlash{
+
+    0%{
+
+        background:#d4ffd4;
+
+    }
+
+    100%{
+
+        background:white;
+
+    }
+
+}
+
+/* ===========================
+   TRAKIVENT Check-in Station
+=========================== */
+
+.stationPage{
+
+    background:#f5f6fa;
+
+    font-family:Arial, sans-serif;
+
+}
+
+.stationContainer{
+
+    max-width:700px;
+
+    margin:auto;
+
+    padding:40px;
+
+    text-align:center;
+
+}
+
+#reader{
+
+    width:100%;
+
+    max-width:500px;
+
+    margin:auto;
+
+}
+
+#stationResult{
+
+    margin-top:30px;
+
+    min-height:250px;
+
+}
+
+/* ===================================
+   TRAKIVENT Premium Station Card
+=================================== */
+
+.stationCard{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+
+    max-width:500px;
+
+    margin:30px auto;
+
+}
+
+.stationAvatar{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    background:#0b6efd;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:34px;
+
+    font-weight:bold;
+
+    margin:auto;
+
+}
+
+.stationName{
+
+    margin:20px 0 10px;
+
+    font-size:30px;
+
+}
+
+.stationBadge{
+
+    display:inline-block;
+
+    padding:8px 18px;
+
+    border-radius:999px;
+
+    font-weight:bold;
+
+    margin-bottom:25px;
+
+}
+
+.ticket-vip{
+
+    background:#FFD700;
+
+    color:#222;
+
+}
+
+.ticket-regular{
+
+    background:#0d6efd;
+
+    color:white;
+
+}
+
+.ticket-staff{
+
+    background:#198754;
+
+    color:white;
+
+}
+
+.ticket-vendor{
+
+    background:#fd7e14;
+
+    color:white;
+
+}
+
+.stationInfo{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:15px;
+
+    margin-bottom:25px;
+
+}
+
+.stationInfo div{
+
+    background:#f7f7f7;
+
+    padding:15px;
+
+    border-radius:10px;
+
+}
+
+.stationCheckinBtn{
+
+    width:100%;
+
+    padding:18px;
+
+    font-size:20px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#198754;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.stationCheckinBtn:hover{
+
+    transform:scale(1.02);
+
+}
+
+/* ================================
+   Success Screen
+================================ */
+
+.stationSuccess{
+
+    background:#198754;
+
+    color:white;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    animation:pop .35s ease;
+
+}
+
+.successIcon{
+
+    font-size:80px;
+
+    font-weight:bold;
+
+    margin-bottom:20px;
+
+}
+
+@keyframes pop{
+
+    from{
+
+        transform:scale(.85);
+
+        opacity:0;
+
+    }
+
+    to{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+/* ===================================
+   Already Checked In
+=================================== */
+
+.stationAlready{
+
+    background:#ffc107;
+
+    color:#222;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    animation:pop .35s ease;
+
+}
+
+.alreadyIcon{
+
+    font-size:70px;
+
+    margin-bottom:15px;
+
+}
+
+/* ===================================
+   Invalid QR
+=================================== */
+
+.stationInvalid{
+
+    background:#dc3545;
+
+    color:white;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    animation:pop .35s ease;
+
+}
+
+.invalidIcon{
+
+    font-size:70px;
+
+    margin-bottom:15px;
 
 }
