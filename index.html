@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Trakivent — Smart Event Operations Platform by Manspace Technologies."
+    >
+
+    <title>Trakivent | Smart Event Operations Platform</title>
+
+    <!-- Poppins -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =====================================
+           BRAND VARIABLES
+        ===================================== */
+
+        :root {
+
+            --brand-bg: #071e3b;
+
+            --brand-accent: #9cff1e;
+
+            --brand-white: #ffffff;
+
+            --brand-muted: #b8c5d6;
+
+            --brand-card: rgba(255, 255, 255, 0.06);
+
+            --brand-border: rgba(255, 255, 255, 0.12);
+
+        }
+
+
+        /* =====================================
+           RESET
+        ===================================== */
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
+
+        body {
+
+            font-family: "Poppins", sans-serif;
+
+            background: var(--brand-bg);
+
+            color: var(--brand-white);
+
+            line-height: 1.6;
+
+            min-height: 100vh;
+
+        }
+
+
+        a {
+
+            color: inherit;
+
+            text-decoration: none;
+
+        }
+
+
+        button,
+        a {
+
+            -webkit-tap-highlight-color: transparent;
+
+        }
+
+
+        /* =====================================
+           PAGE CONTAINER
+        ===================================== */
+
+        .container {
+
+            width: min(1120px, 92%);
+
+            margin: 0 auto;
+
+        }
+
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
+        header {
+
+            padding: 24px 0;
+
+            border-bottom: 1px solid var(--brand-border);
+
+        }
+
+
+        .nav {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+        .brand-mark {
+
+            width: 42px;
+
+            height: 42px;
+
+            border: 2px solid var(--brand-accent);
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: var(--brand-accent);
+
+            font-weight: 800;
+
+            font-size: 18px;
+
+        }
+
+
+        .brand-name {
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            letter-spacing: -0.4px;
+
+        }
+
+
+        .brand-name span {
+
+            color: var(--brand-accent);
+
+        }
+
+
+        .nav-label {
+
+            font-size: 13px;
+
+            color: var(--brand-muted);
+
+            font-weight: 500;
+
+        }
+
+
+        /* =====================================
+           HERO
+        ===================================== */
+
+        .hero {
+
+            padding: 95px 0 80px;
+
+            text-align: center;
+
+        }
+
+
+        .eyebrow {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 14px;
+
+            border: 1px solid rgba(156, 255, 30, 0.35);
+
+            background: rgba(156, 255, 30, 0.06);
+
+            border-radius: 999px;
+
+            color: var(--brand-accent);
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            letter-spacing: 0.8px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 24px;
+
+        }
+
+
+        .eyebrow-dot {
+
+            width: 7px;
+
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--brand-accent);
+
+            box-shadow: 0 0 12px rgba(156, 255, 30, 0.8);
+
+        }
+
+
+        .hero h1 {
+
+            max-width: 900px;
+
+            margin: 0 auto;
+
+            font-size: clamp(42px, 7vw, 76px);
+
+            line-height: 1.05;
+
+            letter-spacing: -2.8px;
+
+            font-weight: 800;
+
+        }
+
+
+        .hero h1 span {
+
+            color: var(--brand-accent);
+
+        }
+
+
+        .hero-text {
+
+            max-width: 720px;
+
+            margin: 28px auto 0;
+
+            color: var(--brand-muted);
+
+            font-size: clamp(16px, 2vw, 19px);
+
+            line-height: 1.8;
+
+        }
+
+
+        /* =====================================
+           CTA BUTTONS
+        ===================================== */
+
+        .hero-actions {
+
+            margin-top: 38px;
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 14px;
+
+        }
+
+
+        .btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            min-height: 54px;
+
+            padding: 0 24px;
+
+            border-radius: 12px;
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+
+        }
+
+
+        .btn:hover {
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .btn-primary {
+
+            background: var(--brand-accent);
+
+            color: var(--brand-bg);
+
+            box-shadow:
+                0 12px 30px rgba(156, 255, 30, 0.15);
+
+        }
+
+
+        .btn-primary:hover {
+
+            box-shadow:
+                0 16px 35px rgba(156, 255, 30, 0.25);
+
+        }
+
+
+        .btn-secondary {
+
+            border: 1px solid var(--brand-border);
+
+            background: rgba(255, 255, 255, 0.04);
+
+            color: var(--brand-white);
+
+        }
+
+
+        .btn-secondary:hover {
+
+            background: rgba(255, 255, 255, 0.08);
+
+        }
+
+
+        .btn-icon {
+
+            font-size: 17px;
+
+        }
+
+
+        /* =====================================
+           DEMO STATUS
+        ===================================== */
+
+        .demo-status {
+
+            margin: 30px auto 0;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 9px;
+
+            color: var(--brand-muted);
+
+            font-size: 12px;
+
+        }
+
+
+        .status-dot {
+
+            width: 8px;
+
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: var(--brand-accent);
+
+            box-shadow: 0 0 10px rgba(156, 255, 30, 0.75);
+
+        }
+
+
+        /* =====================================
+           FEATURES
+        ===================================== */
+
+        .features {
+
+            padding: 35px 0 100px;
+
+        }
+
+
+        .section-heading {
+
+            text-align: center;
+
+            max-width: 700px;
+
+            margin: 0 auto 42px;
+
+        }
+
+
+        .section-heading h2 {
+
+            font-size: clamp(28px, 4vw, 40px);
+
+            line-height: 1.2;
+
+            letter-spacing: -1px;
+
+        }
+
+
+        .section-heading p {
+
+            margin-top: 12px;
+
+            color: var(--brand-muted);
+
+            font-size: 15px;
+
+        }
+
+
+        .feature-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+        }
+
+
+        .feature-card {
+
+            padding: 30px;
+
+            background: var(--brand-card);
+
+            border: 1px solid var(--brand-border);
+
+            border-radius: 18px;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease;
+
+        }
+
+
+        .feature-card:hover {
+
+            transform: translateY(-4px);
+
+            border-color:
+                rgba(156, 255, 30, 0.35);
+
+        }
+
+
+        .feature-number {
+
+            color: var(--brand-accent);
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .feature-card h3 {
+
+            margin-top: 18px;
+
+            font-size: 19px;
+
+            font-weight: 700;
+
+        }
+
+
+        .feature-card p {
+
+            margin-top: 10px;
+
+            color: var(--brand-muted);
+
+            font-size: 14px;
+
+            line-height: 1.8;
+
+        }
+
+
+        /* =====================================
+           LIVE DEMO PANEL
+        ===================================== */
+
+        .demo-panel {
+
+            padding: 0 0 100px;
+
+        }
+
+
+        .demo-box {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 42px;
+
+            border-radius: 22px;
+
+            border: 1px solid
+                rgba(156, 255, 30, 0.22);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(156, 255, 30, 0.08),
+                    rgba(255, 255, 255, 0.03)
+                );
+
+        }
+
+
+        .demo-box::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+
+            height: 220px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(156, 255, 30, 0.08);
+
+            filter: blur(45px);
+
+            right: -80px;
+
+            top: -80px;
+
+            pointer-events: none;
+
+        }
+
+
+        .demo-box-content {
+
+            position: relative;
+
+            z-index: 1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 30px;
+
+        }
+
+
+        .demo-box h2 {
+
+            font-size: clamp(24px, 4vw, 34px);
+
+            line-height: 1.2;
+
+        }
+
+
+        .demo-box p {
+
+            margin-top: 10px;
+
+            color: var(--brand-muted);
+
+            font-size: 14px;
+
+            max-width: 620px;
+
+        }
+
+
+        .demo-box-action {
+
+            flex-shrink: 0;
+
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        footer {
+
+            border-top: 1px solid var(--brand-border);
+
+            padding: 32px 0;
+
+        }
+
+
+        .footer-content {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+        }
+
+
+        .footer-brand {
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+        }
+
+
+        .footer-brand span {
+
+            color: var(--brand-accent);
+
+        }
+
+
+        .footer-text {
+
+            color: var(--brand-muted);
+
+            font-size: 12px;
+
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 800px) {
+
+            .hero {
+
+                padding: 70px 0 65px;
+
+            }
+
+
+            .feature-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .demo-box-content {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+
+            .demo-box-action {
+
+                width: 100%;
+
+            }
+
+
+            .demo-box-action .btn {
+
+                width: 100%;
+
+            }
+
+        }
+
+
+        @media (max-width: 520px) {
+
+            .nav-label {
+
+                display: none;
+
+            }
+
+
+            .hero h1 {
+
+                letter-spacing: -1.8px;
+
+            }
+
+
+            .hero-actions {
+
+                flex-direction: column;
+
+            }
+
+
+            .hero-actions .btn {
+
+                width: 100%;
+
+            }
+
+
+            .demo-box {
+
+                padding: 28px;
+
+            }
+
+
+            .footer-content {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <header>
+
+        <div class="container nav">
+
+            <a
+                href="./"
+                class="brand"
+                aria-label="Trakivent Home"
+            >
+
+                <div class="brand-mark">
+                    T
+                </div>
+
+                <div class="brand-name">
+                    Traki<span>vent</span>
+                </div>
+
+            </a>
+
+
+            <div class="nav-label">
+                Manspace Technologies
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================
+         HERO
+    ====================================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="container">
+
+                <div class="eyebrow">
+
+                    <span class="eyebrow-dot"></span>
+
+                    Live Product Demo
+
+                </div>
+
+
+                <h1>
+
+                    Smarter Events.
+
+                    <span>Seamless Check-in.</span>
+
+                </h1>
+
+
+                <p class="hero-text">
+
+                    Trakivent is a smart event operations platform
+                    that connects event management, guest
+                    registration and real-time check-in in one
+                    connected system.
+
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <!-- Control Centre -->
+
+                    <a
+                        href="./control-centre/"
+                        class="btn btn-primary"
+                    >
+
+                        <span class="btn-icon">
+                            ▣
+                        </span>
+
+                        Launch Control Centre
+
+                    </a>
+
+
+                    <!-- Check-in Station -->
+
+                    <a
+                        href="./control-centre/station.html?station=ST-003&event=EVT-001"
+                        class="btn btn-secondary"
+                    >
+
+                        <span class="btn-icon">
+                            ◉
+                        </span>
+
+                        Launch Check-in Station
+
+                    </a>
+
+                </div>
+
+
+                <div class="demo-status">
+
+                    <span class="status-dot"></span>
+
+                    Live demo environment
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             FEATURES
+        ====================================== -->
+
+        <section class="features">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <h2>
+                        One connected event operation.
+                    </h2>
+
+                    <p>
+                        From event setup to guest arrival,
+                        Trakivent keeps the entire check-in
+                        operation connected.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-grid">
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-number">
+                            01
+                        </div>
+
+                        <h3>
+                            Event Management
+                        </h3>
+
+                        <p>
+                            Manage events and event-specific
+                            operations from a central control
+                            centre.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-number">
+                            02
+                        </div>
+
+                        <h3>
+                            Smart Check-in
+                        </h3>
+
+                        <p>
+                            Deploy configurable check-in
+                            stations for different events
+                            without installing a separate
+                            application.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-number">
+                            03
+                        </div>
+
+                        <h3>
+                            Live Attendance
+                        </h3>
+
+                        <p>
+                            Monitor guest arrivals and
+                            attendance activity from the
+                            control centre in real time.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             DEMO CTA
+        ====================================== -->
+
+        <section class="demo-panel">
+
+            <div class="container">
+
+                <div class="demo-box">
+
+                    <div class="demo-box-content">
+
+
+                        <div>
+
+                            <h2>
+                                Ready to see Trakivent in action?
+                            </h2>
+
+                            <p>
+                                Explore the live Control Centre
+                                or launch a configured check-in
+                                station for the demo event.
+                            </p>
+
+                        </div>
+
+
+                        <div class="demo-box-action">
+
+                            <a
+                                href="./control-centre/"
+                                class="btn btn-primary"
+                            >
+
+                                Enter Trakivent
+
+                                <span class="btn-icon">
+                                    →
+                                </span>
+
+                            </a>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer>
+
+        <div class="container footer-content">
+
+            <div class="footer-brand">
+
+                Traki<span>vent</span>
+
+            </div>
+
+
+            <div class="footer-text">
+
+                A Manspace Technologies product
+
+            </div>
+
+
+            <div class="footer-text">
+
+                BuildFest Demo · 2026
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+</body>
+
+</html>
