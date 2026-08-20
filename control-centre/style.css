@@ -1337,3 +1337,497 @@ Guest Filters
     margin-bottom:15px;
 
 }
+
+/* ===================================
+   Network Connection Status
+=================================== */
+
+#connectionStatus{
+
+    display:inline-block;
+
+    margin:15px auto;
+
+    padding:7px 14px;
+
+    border-radius:999px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.connectionOnline{
+
+    background:#d1e7dd;
+
+    color:#0f5132;
+
+}
+
+.connectionOffline{
+
+    background:#f8d7da;
+
+    color:#842029;
+
+}
+
+/* ===================================
+   Connection Lost
+=================================== */
+
+.stationOffline{
+
+    background:#ffc107;
+
+    color:#222;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    animation:pop .35s ease;
+
+}
+
+.offlineIcon{
+
+    font-size:70px;
+
+    margin-bottom:15px;
+
+}
+
+/* ===================================
+   Connection Restored
+=================================== */
+
+.stationOnline{
+
+    background:#d1e7dd;
+
+    color:#0f5132;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    animation:pop .35s ease;
+
+}
+
+.onlineIcon{
+
+    font-size:60px;
+
+    font-weight:bold;
+
+    margin-bottom:10px;
+
+}
+
+/* =====================================
+   TRAKIVENT
+   Live Station Monitor
+   Version 0.5.1
+   ===================================== */
+
+.stationMonitorPanel {
+    margin-top: 24px;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+.stationMonitorHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+
+.stationMonitorHeader h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+
+.stationMonitorHeader p {
+    margin: 5px 0 0;
+    color: #777;
+    font-size: 14px;
+}
+
+
+.stationMonitorStatus {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+.stationMonitorOnline {
+    color: #16803c;
+}
+
+
+.stationMonitorStatus.stationMonitorOnline {
+    background: #eaf8ef;
+    color: #16803c;
+}
+
+
+.stationMonitorError {
+    background: #fff0f0;
+    color: #c62828;
+}
+
+
+/* =====================================
+   Station Grid
+   ===================================== */
+
+.stationMonitorGrid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(260px, 1fr));
+
+    gap: 16px;
+}
+
+
+/* =====================================
+   Station Card
+   ===================================== */
+
+.stationMonitorCard {
+    position: relative;
+
+    padding: 20px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.stationMonitorCard:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.08);
+
+}
+
+
+/* =====================================
+   Card Header
+   ===================================== */
+
+.stationMonitorCardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+}
+
+
+.stationMonitorCardHeader > div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+.stationMonitorCardHeader h3 {
+    margin: 0;
+
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+
+/* =====================================
+   Station Icon
+   ===================================== */
+
+.stationMonitorCardHeader > div::before {
+
+    content: "📱";
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    background: #eef2ff;
+
+    border-radius: 12px;
+
+    font-size: 20px;
+
+}
+
+
+/* =====================================
+   Active Indicator
+   ===================================== */
+
+.stationMonitorCardHeader
+.stationMonitorOnline {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    background: #eaf8ef;
+
+    color: #16803c;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+}
+
+
+/* =====================================
+   Station Statistics
+   ===================================== */
+
+.stationMonitorStats {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1.5fr;
+
+    gap: 12px;
+
+}
+
+
+.stationMonitorStats > div {
+
+    padding: 14px;
+
+    background: #ffffff;
+
+    border-radius: 10px;
+
+    border: 1px solid #edf0f3;
+
+}
+
+
+.stationMonitorStats strong {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+}
+
+
+.stationMonitorStats span {
+
+    display: block;
+
+    color: #777;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+
+}
+
+
+/* =====================================
+   Empty State
+   ===================================== */
+
+.stationMonitorGrid .emptyFeed {
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #777;
+
+    background: #f8fafc;
+
+    border-radius: 12px;
+
+}
+
+
+/* =====================================
+   Mobile
+   ===================================== */
+
+@media (max-width: 600px) {
+
+    .stationMonitorPanel {
+
+        padding: 18px;
+
+    }
+
+
+    .stationMonitorHeader {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+
+    .stationMonitorStats {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+/* =====================================
+   Control Centre Header
+   ===================================== */
+
+.controlCentreHeader {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+
+/* =====================================
+   Event Selector
+   ===================================== */
+
+.eventSelectorWrapper {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    min-width: 220px;
+
+}
+
+
+.eventSelectorWrapper label {
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #666;
+
+}
+
+
+#eventSelector {
+
+    padding: 10px 12px;
+
+    border: 1px solid #d9d9d9;
+
+    border-radius: 8px;
+
+    background: #fff;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+}
+
+
+#eventSelector:focus {
+
+    outline: none;
+
+    border-color: #333;
+
+}
+
+
+/* =====================================
+   Responsive
+   ===================================== */
+
+@media (max-width: 700px) {
+
+    .controlCentreHeader {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .eventSelectorWrapper {
+
+        width: 100%;
+
+    }
+
+
+    #eventSelector {
+
+        width: 100%;
+
+    }
+
+}

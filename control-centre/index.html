@@ -18,15 +18,38 @@ content="width=device-width, initial-scale=1.0">
 
 <div class="container">
 
-<header>
+<header class="controlCentreHeader">
 
-<h1>TRAKIVENT</h1>
+    <div>
 
-<p id="eventName">
+        <h1>TRAKIVENT</h1>
 
-Loading Event...
+        <p id="eventName">
+            Loading Event...
+        </p>
 
-</p>
+    </div>
+
+
+    <div class="eventSelectorWrapper">
+
+        <label for="eventSelector">
+            Event
+        </label>
+
+        <select id="eventSelector">
+
+            <option value="EVT-001">
+                Demo Event
+            </option>
+
+            <option value="EVT-002">
+                Second Demo Event
+            </option>
+
+        </select>
+
+    </div>
 
 </header>
 
@@ -206,6 +229,47 @@ Two-column Layout
 
 </div>
 
+<!-- =====================================
+Live Station Monitor
+===================================== -->
+
+<section class="stationMonitorPanel">
+
+    <div class="stationMonitorHeader">
+
+        <div>
+
+            <h2>Live Station Monitor</h2>
+
+            <p>
+                Real-time check-in station activity
+            </p>
+
+        </div>
+
+        <div
+            id="stationMonitorStatus"
+            class="stationMonitorStatus">
+
+            ● Monitoring
+
+        </div>
+
+    </div>
+
+    <div
+        id="stationMonitor"
+        class="stationMonitorGrid">
+
+        <div class="emptyFeed">
+
+            Loading stations...
+
+        </div>
+
+    </div>
+
+</section>
 
 <!--
 <script src="dashboard-core.js"></script>
@@ -222,6 +286,7 @@ Two-column Layout
 <script src="js/feed.js"></script>
 <script src="js/guest-list.js"></script>
 <script src="js/search.js"></script>
+<script src="js/station-monitor.js"></script>
 <script src="dashboard.js"></script>
 
 </body>
