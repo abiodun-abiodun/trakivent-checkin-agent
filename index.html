@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,11 @@
     <meta
         name="description"
         content="Trakivent — Smart Event Operations Platform by Manspace Technologies."
+    >
+
+    <meta
+        name="theme-color"
+        content="#071e3b"
     >
 
     <title>Trakivent | Smart Event Operations Platform</title>
@@ -39,19 +45,15 @@
         ===================================== */
 
         :root {
-
             --brand-bg: #071e3b;
-
+            --brand-bg-soft: #0b294d;
             --brand-accent: #9cff1e;
-
             --brand-white: #ffffff;
-
             --brand-muted: #b8c5d6;
-
             --brand-card: rgba(255, 255, 255, 0.06);
-
+            --brand-card-strong: rgba(255, 255, 255, 0.08);
             --brand-border: rgba(255, 255, 255, 0.12);
-
+            --brand-border-accent: rgba(156, 255, 30, 0.25);
         }
 
 
@@ -60,65 +62,41 @@
         ===================================== */
 
         * {
-
             margin: 0;
-
             padding: 0;
-
             box-sizing: border-box;
-
         }
 
 
         html {
-
             scroll-behavior: smooth;
-
         }
 
 
         body {
-
-            font-family: "Poppins", sans-serif;
-
-            background: var(--brand-bg);
-
-            color: var(--brand-white);
-
-            line-height: 1.6;
-
             min-height: 100vh;
-
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(156, 255, 30, 0.07),
+                    transparent 32%
+                ),
+                var(--brand-bg);
+            color: var(--brand-white);
+            font-family: "Poppins", sans-serif;
+            line-height: 1.5;
         }
 
 
         a {
-
             color: inherit;
-
             text-decoration: none;
-
         }
 
-
-        button,
-        a {
-
-            -webkit-tap-highlight-color: transparent;
-
-        }
-
-
-        /* =====================================
-           PAGE CONTAINER
-        ===================================== */
 
         .container {
-
-            width: min(1120px, 92%);
-
+            width: min(1120px, calc(100% - 40px));
             margin: 0 auto;
-
         }
 
 
@@ -127,89 +105,59 @@
         ===================================== */
 
         header {
-
-            padding: 24px 0;
-
+            padding: 22px 0;
             border-bottom: 1px solid var(--brand-border);
-
+            background: rgba(7, 30, 59, 0.75);
+            backdrop-filter: blur(12px);
         }
 
 
         .nav {
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
-
             gap: 20px;
-
         }
 
 
         .brand {
-
             display: flex;
-
             align-items: center;
-
             gap: 12px;
-
         }
 
 
         .brand-mark {
-
             width: 42px;
-
             height: 42px;
-
             border: 2px solid var(--brand-accent);
-
             border-radius: 12px;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             color: var(--brand-accent);
-
             font-weight: 800;
-
             font-size: 18px;
-
+            box-shadow: 0 0 24px rgba(156, 255, 30, 0.08);
         }
 
 
         .brand-name {
-
             font-size: 20px;
-
             font-weight: 700;
-
             letter-spacing: -0.4px;
-
         }
 
 
         .brand-name span {
-
             color: var(--brand-accent);
-
         }
 
 
         .nav-label {
-
             font-size: 13px;
-
             color: var(--brand-muted);
-
             font-weight: 500;
-
         }
 
 
@@ -218,96 +166,82 @@
         ===================================== */
 
         .hero {
-
-            padding: 95px 0 80px;
-
+            position: relative;
+            overflow: hidden;
+            padding: 105px 0 90px;
             text-align: center;
+        }
 
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: rgba(156, 255, 30, 0.06);
+            filter: blur(80px);
+            left: 50%;
+            top: 20px;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
         }
 
 
         .eyebrow {
-
             display: inline-flex;
-
             align-items: center;
-
             gap: 8px;
-
             padding: 8px 14px;
-
             border: 1px solid rgba(156, 255, 30, 0.35);
-
             background: rgba(156, 255, 30, 0.06);
-
             border-radius: 999px;
-
             color: var(--brand-accent);
-
             font-size: 12px;
-
             font-weight: 600;
-
             letter-spacing: 0.8px;
-
             text-transform: uppercase;
-
-            margin-bottom: 24px;
-
+            margin-bottom: 25px;
         }
 
 
         .eyebrow-dot {
-
             width: 7px;
-
             height: 7px;
-
             border-radius: 50%;
-
             background: var(--brand-accent);
-
             box-shadow: 0 0 12px rgba(156, 255, 30, 0.8);
-
         }
 
 
         .hero h1 {
-
-            max-width: 900px;
-
+            max-width: 920px;
             margin: 0 auto;
-
-            font-size: clamp(42px, 7vw, 76px);
-
-            line-height: 1.05;
-
-            letter-spacing: -2.8px;
-
+            font-size: clamp(44px, 7vw, 78px);
+            line-height: 1.03;
+            letter-spacing: -3px;
             font-weight: 800;
-
         }
 
 
         .hero h1 span {
-
+            display: block;
             color: var(--brand-accent);
-
         }
 
 
         .hero-text {
-
-            max-width: 720px;
-
+            max-width: 760px;
             margin: 28px auto 0;
-
             color: var(--brand-muted);
-
             font-size: clamp(16px, 2vw, 19px);
-
             line-height: 1.8;
-
         }
 
 
@@ -316,137 +250,217 @@
         ===================================== */
 
         .hero-actions {
-
             margin-top: 38px;
-
             display: flex;
-
             justify-content: center;
-
             flex-wrap: wrap;
-
             gap: 14px;
-
         }
 
 
         .btn {
-
             display: inline-flex;
-
             align-items: center;
-
             justify-content: center;
-
             gap: 10px;
-
             min-height: 54px;
-
             padding: 0 24px;
-
             border-radius: 12px;
-
             font-family: "Poppins", sans-serif;
-
             font-size: 14px;
-
             font-weight: 600;
-
             transition:
                 transform 0.2s ease,
                 box-shadow 0.2s ease,
-                background 0.2s ease;
-
+                background 0.2s ease,
+                border-color 0.2s ease;
         }
 
 
         .btn:hover {
-
             transform: translateY(-2px);
-
         }
 
 
         .btn-primary {
-
             background: var(--brand-accent);
-
             color: var(--brand-bg);
-
             box-shadow:
                 0 12px 30px rgba(156, 255, 30, 0.15);
-
         }
 
 
         .btn-primary:hover {
-
             box-shadow:
                 0 16px 35px rgba(156, 255, 30, 0.25);
-
         }
 
 
         .btn-secondary {
-
             border: 1px solid var(--brand-border);
-
             background: rgba(255, 255, 255, 0.04);
-
             color: var(--brand-white);
-
         }
 
 
         .btn-secondary:hover {
-
             background: rgba(255, 255, 255, 0.08);
-
+            border-color: rgba(255, 255, 255, 0.22);
         }
 
 
         .btn-icon {
-
             font-size: 17px;
-
+            line-height: 1;
         }
 
 
-        /* =====================================
-           DEMO STATUS
-        ===================================== */
-
         .demo-status {
-
-            margin: 30px auto 0;
-
+            margin: 28px auto 0;
             display: flex;
-
             justify-content: center;
-
             align-items: center;
-
             gap: 9px;
-
             color: var(--brand-muted);
-
             font-size: 12px;
-
         }
 
 
         .status-dot {
-
             width: 8px;
-
             height: 8px;
-
             border-radius: 50%;
-
             background: var(--brand-accent);
-
             box-shadow: 0 0 10px rgba(156, 255, 30, 0.75);
+        }
 
+
+        /* =====================================
+           TRUST STRIP
+        ===================================== */
+
+        .trust-strip {
+            padding: 0 0 80px;
+        }
+
+
+        .trust-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border: 1px solid var(--brand-border);
+            border-radius: 18px;
+            overflow: hidden;
+            background: var(--brand-card);
+        }
+
+
+        .trust-item {
+            padding: 24px;
+            text-align: center;
+        }
+
+
+        .trust-item + .trust-item {
+            border-left: 1px solid var(--brand-border);
+        }
+
+
+        .trust-item strong {
+            display: block;
+            font-size: 15px;
+        }
+
+
+        .trust-item span {
+            display: block;
+            margin-top: 5px;
+            color: var(--brand-muted);
+            font-size: 12px;
+        }
+
+
+        /* =====================================
+           PROBLEM SECTION
+        ===================================== */
+
+        .section {
+            padding: 105px 0;
+        }
+
+
+        .section-heading {
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto 48px;
+        }
+
+
+        .section-kicker {
+            color: var(--brand-accent);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+
+        .section-heading h2 {
+            margin-top: 10px;
+            font-size: clamp(30px, 4vw, 44px);
+            line-height: 1.15;
+            letter-spacing: -1.3px;
+        }
+
+
+        .section-heading p {
+            margin-top: 14px;
+            color: var(--brand-muted);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+
+        .problem-card {
+            padding: 30px;
+            border: 1px solid var(--brand-border);
+            border-radius: 18px;
+            background: var(--brand-card);
+        }
+
+
+        .problem-icon {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: var(--brand-accent);
+            border: 1px solid var(--brand-border-accent);
+            background: rgba(156, 255, 30, 0.06);
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+
+        .problem-card h3 {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+
+        .problem-card p {
+            margin-top: 10px;
+            color: var(--brand-muted);
+            font-size: 14px;
+            line-height: 1.8;
         }
 
 
@@ -455,224 +469,234 @@
         ===================================== */
 
         .features {
-
-            padding: 35px 0 100px;
-
-        }
-
-
-        .section-heading {
-
-            text-align: center;
-
-            max-width: 700px;
-
-            margin: 0 auto 42px;
-
-        }
-
-
-        .section-heading h2 {
-
-            font-size: clamp(28px, 4vw, 40px);
-
-            line-height: 1.2;
-
-            letter-spacing: -1px;
-
-        }
-
-
-        .section-heading p {
-
-            margin-top: 12px;
-
-            color: var(--brand-muted);
-
-            font-size: 15px;
-
+            padding: 105px 0;
+            background:
+                linear-gradient(
+                    180deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.015),
+                    transparent
+                );
         }
 
 
         .feature-grid {
-
             display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
+            grid-template-columns: repeat(4, 1fr);
             gap: 18px;
-
         }
 
 
         .feature-card {
-
-            padding: 30px;
-
+            padding: 28px;
             background: var(--brand-card);
-
             border: 1px solid var(--brand-border);
-
             border-radius: 18px;
-
             transition:
                 transform 0.2s ease,
-                border-color 0.2s ease;
-
+                border-color 0.2s ease,
+                background 0.2s ease;
         }
 
 
         .feature-card:hover {
-
             transform: translateY(-4px);
-
-            border-color:
-                rgba(156, 255, 30, 0.35);
-
+            border-color: rgba(156, 255, 30, 0.35);
+            background: var(--brand-card-strong);
         }
 
 
         .feature-number {
-
             color: var(--brand-accent);
-
             font-size: 13px;
-
             font-weight: 700;
-
             letter-spacing: 1px;
-
         }
 
 
         .feature-card h3 {
-
             margin-top: 18px;
-
-            font-size: 19px;
-
+            font-size: 18px;
             font-weight: 700;
-
         }
 
 
         .feature-card p {
-
             margin-top: 10px;
-
             color: var(--brand-muted);
-
-            font-size: 14px;
-
+            font-size: 13px;
             line-height: 1.8;
-
         }
 
 
         /* =====================================
-           LIVE DEMO PANEL
+           HOW IT WORKS
+        ===================================== */
+
+        .workflow {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+
+        .workflow-step {
+            position: relative;
+            padding: 25px 18px;
+            border: 1px solid var(--brand-border);
+            border-radius: 16px;
+            background: var(--brand-card);
+            text-align: center;
+        }
+
+
+        .workflow-number {
+            color: var(--brand-accent);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+
+        .workflow-step h3 {
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+
+        .workflow-step p {
+            margin-top: 7px;
+            color: var(--brand-muted);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+
+        /* =====================================
+           LIVE DEMO
         ===================================== */
 
         .demo-panel {
-
-            padding: 0 0 100px;
-
+            padding: 105px 0;
         }
 
 
         .demo-box {
-
             position: relative;
-
             overflow: hidden;
-
-            padding: 42px;
-
-            border-radius: 22px;
-
-            border: 1px solid
-                rgba(156, 255, 30, 0.22);
-
+            padding: 52px;
+            border-radius: 24px;
+            border: 1px solid rgba(156, 255, 30, 0.22);
             background:
                 linear-gradient(
                     135deg,
-                    rgba(156, 255, 30, 0.08),
+                    rgba(156, 255, 30, 0.09),
                     rgba(255, 255, 255, 0.03)
                 );
-
         }
 
 
         .demo-box::after {
-
             content: "";
-
             position: absolute;
-
-            width: 220px;
-
-            height: 220px;
-
+            width: 260px;
+            height: 260px;
             border-radius: 50%;
-
-            background:
-                rgba(156, 255, 30, 0.08);
-
-            filter: blur(45px);
-
-            right: -80px;
-
-            top: -80px;
-
+            background: rgba(156, 255, 30, 0.08);
+            filter: blur(50px);
+            right: -90px;
+            top: -90px;
             pointer-events: none;
-
         }
 
 
         .demo-box-content {
-
             position: relative;
-
             z-index: 1;
+        }
 
-            display: flex;
 
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 30px;
-
+        .demo-box .section-kicker {
+            display: block;
         }
 
 
         .demo-box h2 {
-
-            font-size: clamp(24px, 4vw, 34px);
-
-            line-height: 1.2;
-
+            max-width: 760px;
+            margin-top: 10px;
+            font-size: clamp(28px, 4vw, 42px);
+            line-height: 1.15;
         }
 
 
         .demo-box p {
-
-            margin-top: 10px;
-
+            margin-top: 14px;
             color: var(--brand-muted);
-
             font-size: 14px;
-
-            max-width: 620px;
-
+            line-height: 1.8;
+            max-width: 700px;
         }
 
 
-        .demo-box-action {
+        .demo-actions {
+            margin-top: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
 
-            flex-shrink: 0;
 
+        /* =====================================
+           USE CASES
+        ===================================== */
+
+        .use-cases {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+
+        .use-case {
+            padding: 10px 16px;
+            border: 1px solid var(--brand-border);
+            border-radius: 999px;
+            background: var(--brand-card);
+            color: var(--brand-muted);
+            font-size: 13px;
+        }
+
+
+        /* =====================================
+           FINAL CTA
+        ===================================== */
+
+        .final-cta {
+            padding: 30px 0 110px;
+            text-align: center;
+        }
+
+
+        .final-cta h2 {
+            font-size: clamp(28px, 4vw, 42px);
+            line-height: 1.2;
+        }
+
+
+        .final-cta p {
+            max-width: 650px;
+            margin: 14px auto 0;
+            color: var(--brand-muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+
+        .final-cta .btn {
+            margin-top: 28px;
         }
 
 
@@ -681,49 +705,33 @@
         ===================================== */
 
         footer {
-
             border-top: 1px solid var(--brand-border);
-
             padding: 32px 0;
-
         }
 
 
         .footer-content {
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
-
             gap: 20px;
-
         }
 
 
         .footer-brand {
-
             font-size: 14px;
-
             font-weight: 600;
-
         }
 
 
         .footer-brand span {
-
             color: var(--brand-accent);
-
         }
 
 
         .footer-text {
-
             color: var(--brand-muted);
-
             font-size: 12px;
-
         }
 
 
@@ -731,90 +739,107 @@
            RESPONSIVE
         ===================================== */
 
-        @media (max-width: 800px) {
-
-            .hero {
-
-                padding: 70px 0 65px;
-
-            }
-
+        @media (max-width: 950px) {
 
             .feature-grid {
-
-                grid-template-columns: 1fr;
-
+                grid-template-columns: repeat(2, 1fr);
             }
 
 
-            .demo-box-content {
-
-                flex-direction: column;
-
-                align-items: flex-start;
-
-            }
-
-
-            .demo-box-action {
-
-                width: 100%;
-
-            }
-
-
-            .demo-box-action .btn {
-
-                width: 100%;
-
+            .workflow {
+                grid-template-columns: repeat(3, 1fr);
             }
 
         }
 
 
-        @media (max-width: 520px) {
+        @media (max-width: 800px) {
 
-            .nav-label {
+            .hero {
+                padding: 75px 0 70px;
+            }
 
-                display: none;
 
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .trust-box {
+                grid-template-columns: 1fr;
+            }
+
+
+            .trust-item + .trust-item {
+                border-left: 0;
+                border-top: 1px solid var(--brand-border);
+            }
+
+
+            .section,
+            .features,
+            .demo-panel {
+                padding: 80px 0;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .container {
+                width: min(100% - 28px, 1120px);
+            }
+
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .workflow {
+                grid-template-columns: 1fr;
             }
 
 
             .hero h1 {
-
-                letter-spacing: -1.8px;
-
+                letter-spacing: -2px;
             }
 
 
             .hero-actions {
-
                 flex-direction: column;
-
             }
 
 
-            .hero-actions .btn {
-
+            .hero-actions .btn,
+            .demo-actions .btn {
                 width: 100%;
-
             }
 
 
             .demo-box {
-
-                padding: 28px;
-
+                padding: 30px 24px;
             }
 
 
             .footer-content {
-
                 flex-direction: column;
-
                 align-items: flex-start;
+            }
 
+        }
+
+
+        @media (max-width: 480px) {
+
+            .nav-label {
+                display: none;
+            }
+
+
+            .brand-name {
+                font-size: 18px;
             }
 
         }
@@ -825,7 +850,6 @@
 
 
 <body>
-
 
     <!-- =====================================
          HEADER
@@ -861,15 +885,15 @@
     </header>
 
 
-    <!-- =====================================
-         HERO
-    ====================================== -->
-
     <main>
+
+        <!-- =====================================
+             HERO
+        ====================================== -->
 
         <section class="hero">
 
-            <div class="container">
+            <div class="container hero-content">
 
                 <div class="eyebrow">
 
@@ -882,26 +906,23 @@
 
                 <h1>
 
-                    Smarter Events.
+                    Run better events.
 
-                    <span>Seamless Check-in.</span>
+                    <span>Check guests in faster.</span>
 
                 </h1>
 
 
                 <p class="hero-text">
 
-                    Trakivent is a smart event operations platform
-                    that connects event management, guest
-                    registration and real-time check-in in one
-                    connected system.
+                    Trakivent connects event registration, guest access
+                    and real-time attendance into one simple event
+                    operations platform.
 
                 </p>
 
 
                 <div class="hero-actions">
-
-                    <!-- Control Centre -->
 
                     <a
                         href="./control-centre/index.html"
@@ -914,8 +935,6 @@
 
                     </a>
 
-
-                    <!-- Check-in Station -->
 
                     <a
                         href="./control-centre/station.html?station=ST-003&event=EVT-001"
@@ -945,6 +964,142 @@
 
 
         <!-- =====================================
+             TRUST STRIP
+        ====================================== -->
+
+        <section class="trust-strip">
+
+            <div class="container">
+
+                <div class="trust-box">
+
+                    <div class="trust-item">
+
+                        <strong>Event Operations</strong>
+
+                        <span>One connected workflow</span>
+
+                    </div>
+
+
+                    <div class="trust-item">
+
+                        <strong>Guest Check-in</strong>
+
+                        <span>Fast and organised access</span>
+
+                    </div>
+
+
+                    <div class="trust-item">
+
+                        <strong>Live Attendance</strong>
+
+                        <span>Real-time operational visibility</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             PROBLEM
+        ====================================== -->
+
+        <section class="section">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span class="section-kicker">
+                        The problem
+                    </span>
+
+                    <h2>
+                        Event check-in shouldn't be chaotic.
+                    </h2>
+
+                    <p>
+                        When guest information, verification and
+                        attendance tracking are disconnected,
+                        event-day operations become harder than
+                        they need to be.
+                    </p>
+
+                </div>
+
+
+                <div class="problem-grid">
+
+                    <article class="problem-card">
+
+                        <div class="problem-icon">
+                            01
+                        </div>
+
+                        <h3>
+                            Long queues
+                        </h3>
+
+                        <p>
+                            Manual verification can slow down
+                            guest arrival and create congestion
+                            at the entrance.
+                        </p>
+
+                    </article>
+
+
+                    <article class="problem-card">
+
+                        <div class="problem-icon">
+                            02
+                        </div>
+
+                        <h3>
+                            Scattered guest data
+                        </h3>
+
+                        <p>
+                            Registration information and
+                            attendance records should not live
+                            in disconnected systems.
+                        </p>
+
+                    </article>
+
+
+                    <article class="problem-card">
+
+                        <div class="problem-icon">
+                            03
+                        </div>
+
+                        <h3>
+                            No live visibility
+                        </h3>
+
+                        <p>
+                            Organisers need to know who has
+                            arrived and what is happening at
+                            the venue as it happens.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
              FEATURES
         ====================================== -->
 
@@ -954,14 +1109,18 @@
 
                 <div class="section-heading">
 
+                    <span class="section-kicker">
+                        The platform
+                    </span>
+
                     <h2>
                         One connected event operation.
                     </h2>
 
                     <p>
-                        From event setup to guest arrival,
-                        Trakivent keeps the entire check-in
-                        operation connected.
+                        Trakivent brings the essential parts of
+                        event-day operations into one connected
+                        experience.
                     </p>
 
                 </div>
@@ -996,14 +1155,12 @@
                         </div>
 
                         <h3>
-                            Smart Check-in
+                            Guest Registration
                         </h3>
 
                         <p>
-                            Deploy configurable check-in
-                            stations for different events
-                            without installing a separate
-                            application.
+                            Keep guest information organised
+                            and ready for event-day operations.
                         </p>
 
                     </article>
@@ -1016,13 +1173,30 @@
                         </div>
 
                         <h3>
+                            Smart Check-in
+                        </h3>
+
+                        <p>
+                            Verify guests quickly through
+                            configurable check-in stations.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-number">
+                            04
+                        </div>
+
+                        <h3>
                             Live Attendance
                         </h3>
 
                         <p>
                             Monitor guest arrivals and
-                            attendance activity from the
-                            control centre in real time.
+                            attendance activity in real time.
                         </p>
 
                     </article>
@@ -1036,7 +1210,134 @@
 
 
         <!-- =====================================
-             DEMO CTA
+             HOW IT WORKS
+        ====================================== -->
+
+        <section class="section">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span class="section-kicker">
+                        How it works
+                    </span>
+
+                    <h2>
+                        From registration to arrival.
+                    </h2>
+
+                    <p>
+                        A simple operational flow designed to
+                        keep your event team informed and your
+                        guests moving.
+                    </p>
+
+                </div>
+
+
+                <div class="workflow">
+
+
+                    <article class="workflow-step">
+
+                        <div class="workflow-number">
+                            01
+                        </div>
+
+                        <h3>
+                            Set up event
+                        </h3>
+
+                        <p>
+                            Prepare the event and its operational
+                            settings.
+                        </p>
+
+                    </article>
+
+
+                    <article class="workflow-step">
+
+                        <div class="workflow-number">
+                            02
+                        </div>
+
+                        <h3>
+                            Register guests
+                        </h3>
+
+                        <p>
+                            Organise the guest list and registration
+                            information.
+                        </p>
+
+                    </article>
+
+
+                    <article class="workflow-step">
+
+                        <div class="workflow-number">
+                            03
+                        </div>
+
+                        <h3>
+                            Verify access
+                        </h3>
+
+                        <p>
+                            Confirm guests against the event
+                            information.
+                        </p>
+
+                    </article>
+
+
+                    <article class="workflow-step">
+
+                        <div class="workflow-number">
+                            04
+                        </div>
+
+                        <h3>
+                            Check in
+                        </h3>
+
+                        <p>
+                            Process arrivals quickly at the
+                            check-in station.
+                        </p>
+
+                    </article>
+
+
+                    <article class="workflow-step">
+
+                        <div class="workflow-number">
+                            05
+                        </div>
+
+                        <h3>
+                            Monitor live
+                        </h3>
+
+                        <p>
+                            Track attendance activity from the
+                            Control Centre.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             LIVE DEMO
         ====================================== -->
 
         <section class="demo-panel">
@@ -1047,41 +1348,159 @@
 
                     <div class="demo-box-content">
 
-
-                        <div>
-
-                            <h2>
-                                Ready to see Trakivent in action?
-                            </h2>
-
-                            <p>
-                                Explore the live Control Centre
-                                or launch a configured check-in
-                                station for the demo event.
-                            </p>
-
-                        </div>
+                        <span class="section-kicker">
+                            Try the live product
+                        </span>
 
 
-                        <div class="demo-box-action">
+                        <h2>
+                            This isn't a mock-up. Experience
+                            Trakivent in action.
+                        </h2>
+
+
+                        <p>
+                            Explore the live Control Centre or
+                            launch a configured Check-in Station
+                            and experience the event-day workflow
+                            for yourself.
+                        </p>
+
+
+                        <div class="demo-actions">
 
                             <a
-    href="./control-centre/index.html"
-    class="btn btn-primary"
->
+                                href="./control-centre/index.html"
+                                class="btn btn-primary"
+                            >
 
-                                Enter Trakivent
+                                Launch Control Centre
 
                                 <span class="btn-icon">→</span>
 
                             </a>
 
-                        </div>
 
+                            <a
+                                href="./control-centre/station.html?station=ST-003&event=EVT-001"
+                                class="btn btn-secondary"
+                            >
+
+                                Launch Check-in Station
+
+                                <span class="btn-icon">↗</span>
+
+                            </a>
+
+                        </div>
 
                     </div>
 
                 </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             USE CASES
+        ====================================== -->
+
+        <section class="section">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span class="section-kicker">
+                        Built for events that matter
+                    </span>
+
+                    <h2>
+                        Ready for different event environments.
+                    </h2>
+
+                    <p>
+                        Trakivent can support event teams that need
+                        a more organised and visible guest arrival
+                        experience.
+                    </p>
+
+                </div>
+
+
+                <div class="use-cases">
+
+                    <span class="use-case">
+                        Conferences
+                    </span>
+
+                    <span class="use-case">
+                        Summits
+                    </span>
+
+                    <span class="use-case">
+                        Weddings
+                    </span>
+
+                    <span class="use-case">
+                        Corporate Events
+                    </span>
+
+                    <span class="use-case">
+                        Exhibitions
+                    </span>
+
+                    <span class="use-case">
+                        Private Events
+                    </span>
+
+                    <span class="use-case">
+                        VIP Events
+                    </span>
+
+                    <span class="use-case">
+                        Celebrations
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             FINAL CTA
+        ====================================== -->
+
+        <section class="final-cta">
+
+            <div class="container">
+
+                <h2>
+                    See how Trakivent can work for your event.
+                </h2>
+
+
+                <p>
+                    Explore the live product or talk to Manspace
+                    Technologies about deploying Trakivent for
+                    your next event.
+                </p>
+
+
+                <a
+                    href="./control-centre/index.html"
+                    class="btn btn-primary"
+                >
+
+                    Enter Trakivent
+
+                    <span class="btn-icon">→</span>
+
+                </a>
 
             </div>
 
@@ -1107,14 +1526,14 @@
 
             <div class="footer-text">
 
-                A Manspace Technologies product
+                Smart Event Operations Platform
 
             </div>
 
 
             <div class="footer-text">
 
-                BuildFest Demo · 2026
+                A Manspace Technologies product · 2026
 
             </div>
 
@@ -1126,3 +1545,4 @@
 </body>
 
 </html>
+```
