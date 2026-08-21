@@ -156,7 +156,7 @@ function renderStationMonitor(stations) {
 
         const stationId =
             station.stationId ||
-            "UNKNOWN";
+            "CONTROL CENTRE";
 
 
         const checkins =
