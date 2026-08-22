@@ -333,6 +333,580 @@
             box-shadow: 0 0 10px rgba(156, 255, 30, 0.75);
         }
 
+        /* =====================================
+           PRODUCT PREVIEW
+        ===================================== */
+
+        .product-preview {
+
+            padding: 0 0 90px;
+
+        }
+
+
+        .product-preview-shell {
+
+            overflow: hidden;
+
+            border: 1px solid rgba(255, 255, 255, 0.14);
+
+            border-radius: 22px;
+
+            background: #091a31;
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.28),
+                0 0 60px rgba(156, 255, 30, 0.04);
+
+        }
+
+
+        .preview-topbar {
+
+            min-height: 68px;
+
+            padding: 0 24px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            border-bottom: 1px solid var(--brand-border);
+
+            background: rgba(255, 255, 255, 0.025);
+
+        }
+
+
+        .preview-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+        }
+
+
+        .preview-brand-mark {
+
+            width: 34px;
+
+            height: 34px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border: 1px solid rgba(156, 255, 30, 0.5);
+
+            border-radius: 9px;
+
+            color: var(--brand-accent);
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            background: rgba(156, 255, 30, 0.06);
+
+        }
+
+
+        .preview-brand strong {
+
+            display: block;
+
+            font-size: 13px;
+
+        }
+
+
+        .preview-brand span {
+
+            display: block;
+
+            margin-top: 1px;
+
+            color: var(--brand-muted);
+
+            font-size: 10px;
+
+        }
+
+
+        .preview-event {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            color: var(--brand-muted);
+
+            font-size: 10px;
+
+        }
+
+
+        .preview-event strong {
+
+            color: var(--brand-white);
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+        }
+
+        .preview-event-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.preview-event-info span {
+    color: var(--brand-muted);
+    font-size: 10px;
+}
+
+.preview-event-info strong {
+    color: var(--brand-white);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.preview-event-info small {
+    color: var(--brand-muted);
+    font-size: 8px;
+    font-weight: 500;
+}
+
+
+        .preview-live-dot {
+
+            width: 7px;
+
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--brand-accent);
+
+            box-shadow: 0 0 10px rgba(156, 255, 30, 0.7);
+
+        }
+
+
+        .preview-body {
+
+            display: grid;
+
+            grid-template-columns: 170px 1fr;
+
+            min-height: 400px;
+
+        }
+
+
+        .preview-sidebar {
+
+            padding: 22px 14px;
+
+            border-right: 1px solid var(--brand-border);
+
+            background: rgba(0, 0, 0, 0.12);
+
+        }
+
+
+        .preview-nav-item {
+
+            padding: 11px 13px;
+
+            margin-bottom: 5px;
+
+            border-radius: 9px;
+
+            color: var(--brand-muted);
+
+            font-size: 11px;
+
+        }
+
+
+        .preview-nav-item.active {
+
+            color: var(--brand-accent);
+
+            background: rgba(156, 255, 30, 0.08);
+
+        }
+
+
+        .preview-main {
+
+            padding: 28px;
+
+            min-width: 0;
+
+        }
+
+
+        .preview-heading {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+        }
+
+
+        .preview-kicker {
+
+            color: var(--brand-muted);
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .preview-heading h3 {
+
+            margin-top: 5px;
+
+            font-size: 21px;
+
+            letter-spacing: -0.5px;
+
+        }
+
+
+        .preview-event-status {
+
+            padding: 6px 10px;
+
+            border: 1px solid rgba(156, 255, 30, 0.2);
+
+            border-radius: 999px;
+
+            color: var(--brand-accent);
+
+            background: rgba(156, 255, 30, 0.06);
+
+            font-size: 9px;
+
+            font-weight: 600;
+
+        }
+
+
+        .preview-stats {
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 10px;
+
+            margin-top: 22px;
+
+        }
+
+
+        .preview-stat {
+
+            padding: 16px;
+
+            border: 1px solid var(--brand-border);
+
+            border-radius: 12px;
+
+            background: rgba(255, 255, 255, 0.025);
+
+        }
+
+
+        .preview-stat span {
+
+            display: block;
+
+            color: var(--brand-muted);
+
+            font-size: 9px;
+
+        }
+
+
+        .preview-stat strong {
+
+            display: block;
+
+            margin-top: 7px;
+
+            font-size: 23px;
+
+            line-height: 1;
+
+        }
+
+
+        .preview-stat small {
+
+            display: block;
+
+            margin-top: 7px;
+
+            color: var(--brand-muted);
+
+            font-size: 8px;
+
+        }
+
+.preview-progress {
+    width: 100%;
+    height: 4px;
+    margin-top: 12px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.preview-progress-bar {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--brand-accent);
+}
+
+        .preview-lower {
+
+            display: grid;
+
+            grid-template-columns: 1.15fr 0.85fr;
+
+            gap: 12px;
+
+            margin-top: 12px;
+
+        }
+
+
+        .preview-chart-card,
+
+        .preview-checkins {
+
+            padding: 18px;
+
+            border: 1px solid var(--brand-border);
+
+            border-radius: 12px;
+
+            background: rgba(255, 255, 255, 0.025);
+
+        }
+
+
+        .preview-card-heading {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+        }
+
+
+        .preview-card-heading strong {
+
+            display: block;
+
+            font-size: 11px;
+
+        }
+
+
+        .preview-card-heading span {
+
+            display: block;
+
+            margin-top: 3px;
+
+            color: var(--brand-muted);
+
+            font-size: 8px;
+
+        }
+
+
+        .preview-card-value {
+
+            color: var(--brand-accent) !important;
+
+            font-size: 14px !important;
+
+            font-weight: 700;
+
+        }
+
+
+        .preview-chart {
+
+            height: 120px;
+
+            margin-top: 18px;
+
+            padding: 10px 4px 0;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            gap: 8px;
+
+            border-bottom: 1px solid var(--brand-border);
+
+        }
+
+
+        .chart-bar {
+
+            flex: 1;
+
+            min-width: 5px;
+
+            border-radius: 4px 4px 0 0;
+
+            background: rgba(156, 255, 30, 0.55);
+
+        }
+
+
+        .preview-checkin {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            padding: 10px 0;
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+        }
+
+
+        .preview-checkin:last-child {
+
+            border-bottom: 0;
+
+        }
+
+
+        .checkin-avatar {
+
+            width: 27px;
+
+            height: 27px;
+
+            flex: 0 0 auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 8px;
+
+            color: var(--brand-white);
+
+            background: rgba(255, 255, 255, 0.08);
+
+            font-size: 8px;
+
+            font-weight: 600;
+
+        }
+
+
+        .preview-checkin div {
+
+            min-width: 0;
+
+            flex: 1;
+
+        }
+
+
+        .preview-checkin strong {
+
+            display: block;
+
+            font-size: 9px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+        }
+
+
+        .preview-checkin div span {
+
+            display: block;
+
+            margin-top: 2px;
+
+            color: var(--brand-muted);
+
+            font-size: 8px;
+
+        }
+
+
+        .checkin-status {
+
+            color: var(--brand-accent);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+        }
+
+        .preview-checkin .checkin-status {
+
+    color: var(--brand-accent) !important;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    line-height: 1;
+
+}
 
         /* =====================================
            TRUST STRIP
@@ -754,34 +1328,43 @@
 
         @media (max-width: 800px) {
 
-            .hero {
-                padding: 75px 0 70px;
-            }
+    .hero {
+        padding: 75px 0 70px;
+    }
 
+    .problem-grid {
+        grid-template-columns: 1fr;
+    }
 
-            .problem-grid {
-                grid-template-columns: 1fr;
-            }
+    .trust-box {
+        grid-template-columns: 1fr;
+    }
 
+    .trust-item + .trust-item {
+        border-left: 0;
+        border-top: 1px solid var(--brand-border);
+    }
 
-            .trust-box {
-                grid-template-columns: 1fr;
-            }
+    .section,
+    .features,
+    .demo-panel {
+        padding: 80px 0;
+    }
 
+    /* Mobile behaviour for the product preview */
+    .product-preview {
+        grid-template-columns: 1fr;
+    }
 
-            .trust-item + .trust-item {
-                border-left: 0;
-                border-top: 1px solid var(--brand-border);
-            }
+    .preview-sidebar {
+        display: none;
+    }
 
+    .preview-main {
+        min-width: 0;
+    }
 
-            .section,
-            .features,
-            .demo-panel {
-                padding: 80px 0;
-            }
-
-        }
+}
 
 
         @media (max-width: 650px) {
@@ -954,6 +1537,339 @@
                     <span class="status-dot"></span>
 
                     Live demo environment
+
+                </div>
+
+            </div>
+
+                </section>
+
+
+        <!-- =====================================
+             PRODUCT PREVIEW
+        ====================================== -->
+
+        <section class="product-preview">
+
+            <div class="container">
+
+                <div class="product-preview-shell">
+
+                    <div class="preview-topbar">
+
+                        <div class="preview-brand">
+
+                            <div class="preview-brand-mark">
+                                T
+                            </div>
+
+                            <div>
+                                <strong>Trakivent</strong>
+                                <span>Control Centre</span>
+                            </div>
+
+                        </div>
+
+                        <div class="preview-event">
+
+    <span class="preview-live-dot"></span>
+
+    <span>LIVE DEMO</span>
+
+    <strong>Demo Event</strong>
+
+    <small>Sample event data</small>
+
+</div>
+
+                    </div>
+
+
+                    <div class="preview-body">
+
+                        <aside class="preview-sidebar">
+
+                            <div class="preview-nav-item active">
+                                Dashboard
+                            </div>
+
+                            <div class="preview-nav-item">
+                                Events
+                            </div>
+
+                            <div class="preview-nav-item">
+                                Guests
+                            </div>
+
+                            <div class="preview-nav-item">
+                                Registrations
+                            </div>
+
+                            <div class="preview-nav-item">
+                                Check-in
+                            </div>
+
+                        </aside>
+
+
+                        <div class="preview-main">
+
+                            <div class="preview-heading">
+
+                                <div>
+
+                                    <span class="preview-kicker">
+                                        EVENT OVERVIEW
+                                    </span>
+
+                                    <h3>
+                                        Demo Event
+                                    </h3>
+
+                                </div>
+
+                                <span class="preview-event-status">
+                                    Active
+                                </span>
+
+                            </div>
+
+
+                            <div class="preview-stats">
+
+                                <div class="preview-stat">
+
+                                    <span>
+                                        Registered
+                                    </span>
+
+                                    <strong>
+                                        248
+                                    </strong>
+
+                                    <small>
+                                        Guests
+                                    </small>
+
+                                </div>
+
+
+                                <div class="preview-stat">
+
+                                    <span>
+                                        Checked In
+                                    </span>
+
+                                    <strong>
+                                        126
+                                    </strong>
+
+                                    <small>
+                                        Guests arrived
+                                    </small>
+
+                                </div>
+
+
+                                <div class="preview-stat">
+
+    <span>
+        Attendance
+    </span>
+
+    <strong>
+        51%
+    </strong>
+
+    <small>
+        Current rate
+    </small>
+
+    <div class="preview-progress">
+
+        <div
+            class="preview-progress-bar"
+            style="width: 51%;"
+        ></div>
+
+    </div>
+
+</div>
+
+
+                                <div class="preview-stat">
+
+                                    <span>
+                                        Stations
+                                    </span>
+
+                                    <strong>
+                                        3
+                                    </strong>
+
+                                    <small>
+                                        Active stations
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="preview-lower">
+
+                                <div class="preview-chart-card">
+
+                                    <div class="preview-card-heading">
+
+                                        <div>
+
+                                            <strong>
+                                                Attendance activity
+                                            </strong>
+
+                                            <span>
+                                                Today's check-ins
+                                            </span>
+
+                                        </div>
+
+                                        <span class="preview-card-value">
+                                            126
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="preview-chart">
+
+                                        <div class="chart-bar" style="height: 28%;"></div>
+
+                                        <div class="chart-bar" style="height: 42%;"></div>
+
+                                        <div class="chart-bar" style="height: 35%;"></div>
+
+                                        <div class="chart-bar" style="height: 58%;"></div>
+
+                                        <div class="chart-bar" style="height: 48%;"></div>
+
+                                        <div class="chart-bar" style="height: 72%;"></div>
+
+                                        <div class="chart-bar" style="height: 64%;"></div>
+
+                                        <div class="chart-bar" style="height: 86%;"></div>
+
+                                        <div class="chart-bar" style="height: 76%;"></div>
+
+                                        <div class="chart-bar" style="height: 94%;"></div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="preview-checkins">
+
+                                    <div class="preview-card-heading">
+
+                                        <div>
+
+                                            <strong>
+                                                Recent check-ins
+                                            </strong>
+
+                                            <span>
+                                                Live activity
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="preview-checkin">
+
+    <span class="checkin-avatar">
+        AO
+    </span>
+
+    <div>
+
+        <strong>
+            Ada Okafor
+        </strong>
+
+        <span>
+            2 min ago · ST-003
+        </span>
+
+    </div>
+
+    <span class="checkin-status">
+        ✓
+    </span>
+
+</div>
+
+
+                                    <div class="preview-checkin">
+
+    <span class="checkin-avatar">
+        MA
+    </span>
+
+    <div>
+
+        <strong>
+            Michael Ade
+        </strong>
+
+        <span>
+            4 min ago · ST-003
+        </span>
+
+    </div>
+
+    <span class="checkin-status">
+        ✓
+    </span>
+
+</div>
+
+
+                                    <div class="preview-checkin">
+
+                                        <div class="preview-checkin">
+
+    <span class="checkin-avatar">
+        SK
+    </span>
+
+    <div>
+
+        <strong>
+            Sarah Kim
+        </strong>
+
+        <span>
+            7 min ago · ST-003
+        </span>
+
+    </div>
+
+    <span class="checkin-status">
+        ✓
+    </span>
+
+</div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
