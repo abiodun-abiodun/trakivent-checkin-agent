@@ -2,7 +2,7 @@
 // TRAKIVENT
 // Event Control Centre
 // dashboard.js
-// Version 0.5.2
+// Version 0.5.3
 // =====================================
 
 
@@ -31,6 +31,158 @@ function getSelectedEventId() {
 
 
 // =====================================
+// Load Events Into Selector
+// =====================================
+
+async function loadEventSelector() {
+
+    const eventSelector =
+        document.getElementById(
+            "eventSelector"
+        );
+
+
+    if (!eventSelector) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const result =
+            await apiEvents();
+
+
+        if (
+            !result ||
+            !result.success ||
+            !Array.isArray(result.events)
+        ) {
+
+            console.error(
+                "Unable to load events:",
+                result
+            );
+
+            return;
+
+        }
+
+
+        // ---------------------------------
+        // Clear existing options
+        // ---------------------------------
+
+        eventSelector.innerHTML = "";
+
+
+        // ---------------------------------
+        // Add available events
+        // ---------------------------------
+
+        result.events.forEach(
+            function(event) {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                option.value =
+                    event.eventId;
+
+
+                option.textContent =
+                    event.eventName;
+
+
+                eventSelector.appendChild(
+                    option
+                );
+
+            }
+        );
+
+
+        // ---------------------------------
+        // Select current event
+        // ---------------------------------
+
+        const currentEvent =
+            result.events.find(
+                function(event) {
+
+                    return (
+                        String(event.eventId)
+                            .trim() ===
+                        String(CONTROL_EVENT_ID)
+                            .trim()
+                    );
+
+                }
+            );
+
+
+        if (currentEvent) {
+
+            eventSelector.value =
+                currentEvent.eventId;
+
+        }
+
+
+        // ---------------------------------
+        // Fallback to first event
+        // ---------------------------------
+
+        else if (
+            result.events.length > 0
+        ) {
+
+            CONTROL_EVENT_ID =
+                result.events[0].eventId;
+
+
+            eventSelector.value =
+                CONTROL_EVENT_ID;
+
+        }
+
+
+        // ---------------------------------
+        // Event Change Handler
+        // ---------------------------------
+
+        eventSelector.addEventListener(
+            "change",
+            function() {
+
+                changeControlEvent(
+                    this.value
+                );
+
+            }
+        );
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Event Selector Error:",
+            error
+        );
+
+    }
+
+}
+
+
+// =====================================
 // Change Event
 // =====================================
 
@@ -43,13 +195,19 @@ async function changeControlEvent(eventId) {
     }
 
 
-    CONTROL_EVENT_ID = eventId;
+    CONTROL_EVENT_ID =
+        eventId;
 
 
+    // ---------------------------------
     // Clear current guest search
+    // ---------------------------------
 
     const searchBox =
-        document.getElementById("searchBox");
+        document.getElementById(
+            "searchBox"
+        );
+
 
     if (searchBox) {
 
@@ -59,7 +217,10 @@ async function changeControlEvent(eventId) {
 
 
     const searchResult =
-        document.getElementById("searchResult");
+        document.getElementById(
+            "searchResult"
+        );
+
 
     if (searchResult) {
 
@@ -76,20 +237,27 @@ async function changeControlEvent(eventId) {
     }
 
 
+    // ---------------------------------
     // Reset guest filter
+    // ---------------------------------
 
-    guestFilter = "all";
+    guestFilter =
+        "all";
 
 
     document
-        .querySelectorAll(".filterBtn")
-        .forEach(function(btn) {
+        .querySelectorAll(
+            ".filterBtn"
+        )
+        .forEach(
+            function(btn) {
 
-            btn.classList.remove(
-                "activeFilter"
-            );
+                btn.classList.remove(
+                    "activeFilter"
+                );
 
-        });
+            }
+        );
 
 
     const allButton =
@@ -107,7 +275,9 @@ async function changeControlEvent(eventId) {
     }
 
 
-    // Refresh everything for the new event
+    // ---------------------------------
+    // Refresh everything
+    // ---------------------------------
 
     await refreshDashboard();
 
@@ -139,55 +309,73 @@ async function loadDashboard() {
 
 
         document
-            .getElementById("eventName")
+            .getElementById(
+                "eventName"
+            )
             .textContent =
                 data.eventName;
 
 
         document
-            .getElementById("expectedGuests")
+            .getElementById(
+                "expectedGuests"
+            )
             .textContent =
                 data.expectedGuests;
 
 
         document
-            .getElementById("checkedIn")
+            .getElementById(
+                "checkedIn"
+            )
             .textContent =
                 data.checkedIn;
 
 
         document
-            .getElementById("remaining")
+            .getElementById(
+                "remaining"
+            )
             .textContent =
                 data.remaining;
 
 
         document
-            .getElementById("attendance")
+            .getElementById(
+                "attendance"
+            )
             .textContent =
                 data.attendance + "%";
 
 
         document
-            .getElementById("attendanceLabel")
+            .getElementById(
+                "attendanceLabel"
+            )
             .textContent =
                 data.attendance + "%";
 
 
         document
-            .getElementById("vipExpected")
+            .getElementById(
+                "vipExpected"
+            )
             .textContent =
                 data.vipExpected;
 
 
         document
-            .getElementById("vipChecked")
+            .getElementById(
+                "vipChecked"
+            )
             .textContent =
                 data.vipCheckedIn;
 
 
         document
-            .getElementById("progressFill")
+            .getElementById(
+                "progressFill"
+            )
             .style.width =
                 data.attendance + "%";
 
@@ -319,92 +507,76 @@ async function undoGuest(token) {
 
 
 // =====================================
-// Guest Filters
+// Control Centre Initialisation
 // =====================================
 
 document.addEventListener(
     "DOMContentLoaded",
-    function() {
+    async function() {
 
+
+        // ---------------------------------
+        // Guest Filters
+        // ---------------------------------
 
         document
-            .querySelectorAll(".filterBtn")
-            .forEach(function(btn) {
+            .querySelectorAll(
+                ".filterBtn"
+            )
+            .forEach(
+                function(btn) {
+
+                    btn.addEventListener(
+                        "click",
+                        function() {
 
 
-                btn.addEventListener(
-                    "click",
-                    function() {
+                            document
+                                .querySelectorAll(
+                                    ".filterBtn"
+                                )
+                                .forEach(
+                                    function(b) {
+
+                                        b.classList
+                                            .remove(
+                                                "activeFilter"
+                                            );
+
+                                    }
+                                );
 
 
-                        document
-                            .querySelectorAll(
-                                ".filterBtn"
-                            )
-                            .forEach(
-                                function(b) {
-
-                                    b.classList
-                                        .remove(
-                                            "activeFilter"
-                                        );
-
-                                }
+                            this.classList.add(
+                                "activeFilter"
                             );
 
 
-                        this.classList.add(
-                            "activeFilter"
-                        );
+                            guestFilter =
+                                this.dataset.filter;
 
 
-                        guestFilter =
-                            this.dataset.filter;
+                            refreshGuestList();
 
-
-                        refreshGuestList();
-
-                    }
-                );
-
-            });
-
-
-        // =================================
-        // Event Selector
-        // =================================
-
-        const eventSelector =
-            document.getElementById(
-                "eventSelector"
-            );
-
-
-        if (eventSelector) {
-
-            eventSelector.value =
-                CONTROL_EVENT_ID;
-
-
-            eventSelector.addEventListener(
-                "change",
-                function() {
-
-                    changeControlEvent(
-                        this.value
+                        }
                     );
 
                 }
             );
 
-        }
+
+        // ---------------------------------
+        // Event Selector
+        // ---------------------------------
+
+        await loadEventSelector();
 
 
-        // =================================
+        // ---------------------------------
         // Initial Dashboard Load
-        // =================================
+        // ---------------------------------
 
-        refreshDashboard();
+        await refreshDashboard();
 
     }
 );

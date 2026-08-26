@@ -250,6 +250,25 @@ async function apiGuestList() {
 
 }
 
+// =====================================
+// Events
+// =====================================
+
+async function apiEvents() {
+
+    return await apiRequest(
+
+        "events",
+
+        "",
+
+        "",
+
+        ""
+
+    );
+
+}
 
 // =====================================
 // Station Monitor
