@@ -334,3 +334,21 @@ async function apiUndo(token) {
     );
 
 }
+
+// =====================================
+// Combined Control Centre
+// =====================================
+
+async function apiControlCentre() {
+
+    return await apiRequest(
+
+        "controlcentre",
+
+        "",
+
+        getCurrentEventId()
+
+    );
+
+}

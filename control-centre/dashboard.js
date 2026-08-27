@@ -2,7 +2,7 @@
 // TRAKIVENT
 // Event Control Centre
 // dashboard.js
-// Version 0.5.4
+// Version 0.5.5
 // =====================================
 
 
@@ -23,6 +23,11 @@ const CONTROL_EVENT_STORAGE_KEY =
 // Default fallback is EVT-001.
 
 let CONTROL_EVENT_ID = "EVT-001";
+
+
+// Prevent overlapping refresh requests.
+
+let controlCentreRefreshing = false;
 
 
 // =====================================
@@ -338,22 +343,59 @@ async function changeControlEvent(eventId) {
 
 
 // =====================================
-// Dashboard Overview
+// Refresh Entire Control Centre
 // =====================================
 
-async function loadDashboard() {
+async function refreshDashboard() {
+
+    // ---------------------------------
+    // Prevent overlapping requests
+    // ---------------------------------
+
+    if (controlCentreRefreshing) {
+
+        console.log(
+            "Control Centre refresh skipped: previous request still running."
+        );
+
+        return;
+
+    }
+
+
+    controlCentreRefreshing = true;
+
+
+    const startTime =
+        performance.now();
+
 
     try {
 
         const data =
-            await apiDashboard();
+            await apiControlCentre();
 
 
-        if (!data.success) {
+        const apiTime =
+            performance.now() -
+            startTime;
+
+
+        console.log(
+            "Control Centre API:",
+            Math.round(apiTime),
+            "ms"
+        );
+
+
+        if (
+            !data ||
+            !data.success
+        ) {
 
             console.error(
-                "Dashboard:",
-                data.message
+                "Control Centre:",
+                data
             );
 
             return;
@@ -361,76 +403,160 @@ async function loadDashboard() {
         }
 
 
-        document
-            .getElementById(
-                "eventName"
-            )
-            .textContent =
-                data.eventName;
+        // ---------------------------------
+        // Dashboard
+        // ---------------------------------
+
+        const dashboard =
+            data.dashboard;
 
 
-        document
-            .getElementById(
-                "expectedGuests"
-            )
-            .textContent =
-                data.expectedGuests;
+        if (dashboard) {
+
+            const eventName =
+                document.getElementById(
+                    "eventName"
+                );
+
+            if (eventName) {
+
+                eventName.textContent =
+                    dashboard.eventName;
+
+            }
 
 
-        document
-            .getElementById(
-                "checkedIn"
-            )
-            .textContent =
-                data.checkedIn;
+            const expectedGuests =
+                document.getElementById(
+                    "expectedGuests"
+                );
+
+            if (expectedGuests) {
+
+                expectedGuests.textContent =
+                    dashboard.expectedGuests;
+
+            }
 
 
-        document
-            .getElementById(
-                "remaining"
-            )
-            .textContent =
-                data.remaining;
+            const checkedIn =
+                document.getElementById(
+                    "checkedIn"
+                );
+
+            if (checkedIn) {
+
+                checkedIn.textContent =
+                    dashboard.checkedIn;
+
+            }
 
 
-        document
-            .getElementById(
-                "attendance"
-            )
-            .textContent =
-                data.attendance + "%";
+            const remaining =
+                document.getElementById(
+                    "remaining"
+                );
+
+            if (remaining) {
+
+                remaining.textContent =
+                    dashboard.remaining;
+
+            }
 
 
-        document
-            .getElementById(
-                "attendanceLabel"
-            )
-            .textContent =
-                data.attendance + "%";
+            const attendance =
+                document.getElementById(
+                    "attendance"
+                );
+
+            if (attendance) {
+
+                attendance.textContent =
+                    dashboard.attendance + "%";
+
+            }
 
 
-        document
-            .getElementById(
-                "vipExpected"
-            )
-            .textContent =
-                data.vipExpected;
+            const attendanceLabel =
+                document.getElementById(
+                    "attendanceLabel"
+                );
+
+            if (attendanceLabel) {
+
+                attendanceLabel.textContent =
+                    dashboard.attendance + "%";
+
+            }
 
 
-        document
-            .getElementById(
-                "vipChecked"
-            )
-            .textContent =
-                data.vipCheckedIn;
+            const vipExpected =
+                document.getElementById(
+                    "vipExpected"
+                );
+
+            if (vipExpected) {
+
+                vipExpected.textContent =
+                    dashboard.vipExpected;
+
+            }
 
 
-        document
-            .getElementById(
-                "progressFill"
-            )
-            .style.width =
-                data.attendance + "%";
+            const vipChecked =
+                document.getElementById(
+                    "vipChecked"
+                );
+
+            if (vipChecked) {
+
+                vipChecked.textContent =
+                    dashboard.vipCheckedIn;
+
+            }
+
+
+            const progressFill =
+                document.getElementById(
+                    "progressFill"
+                );
+
+            if (progressFill) {
+
+                progressFill.style.width =
+                    dashboard.attendance + "%";
+
+            }
+
+        }
+
+
+        // ---------------------------------
+        // Guest List
+        // ---------------------------------
+
+        renderGuestList(
+            data.guests || []
+        );
+
+
+        // ---------------------------------
+        // Recent Feed
+        // ---------------------------------
+
+        renderFeed(
+            data.recent || []
+        );
+
+
+        // ---------------------------------
+        // Station Monitor
+        // ---------------------------------
+
+        renderStationMonitor(
+            data.stations || []
+        );
 
     }
 
@@ -438,32 +564,19 @@ async function loadDashboard() {
     catch (error) {
 
         console.error(
-            "Dashboard Error:",
+            "Control Centre Refresh:",
             error
         );
 
     }
 
-}
 
+    finally {
 
-// =====================================
-// Refresh Entire Control Centre
-// =====================================
+        controlCentreRefreshing =
+            false;
 
-async function refreshDashboard() {
-
-    await Promise.all([
-
-        loadDashboard(),
-
-        refreshFeed(),
-
-        refreshGuestList(),
-
-        refreshStationMonitor()
-
-    ]);
+    }
 
 }
 

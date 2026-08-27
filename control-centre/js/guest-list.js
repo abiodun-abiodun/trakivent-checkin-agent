@@ -40,6 +40,10 @@ function renderGuestList(guests) {
     const guestList =
         document.getElementById("guestList");
 
+    // Clear existing guest list before every render.
+    // This prevents duplicates during automatic dashboard refresh.
+    guestList.innerHTML = "";
+
     const groups = {
 
         VIP: [],
