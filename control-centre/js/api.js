@@ -61,15 +61,15 @@ function getCurrentEventId() {
 function getCurrentStationId() {
 
     if (
-        typeof STATION_ID !== "undefined"
+        typeof STATION_ID !== "undefined" &&
+        STATION_ID
     ) {
 
         return STATION_ID;
 
     }
 
-
-    return "";
+    return "CONTROL CENTRE";
 
 }
 

@@ -2,7 +2,7 @@
 // TRAKIVENT
 // Event Control Centre
 // dashboard.js
-// Version 0.5.3
+// Version 0.5.4
 // =====================================
 
 
@@ -13,8 +13,14 @@ let guestFilter = "all";
 // Control Centre Configuration
 // =====================================
 
+// Browser storage key for the selected event.
+
+const CONTROL_EVENT_STORAGE_KEY =
+    "trakivent_control_event_id";
+
+
 // Current event selected in the Control Centre.
-// Default event is EVT-001.
+// Default fallback is EVT-001.
 
 let CONTROL_EVENT_ID = "EVT-001";
 
@@ -108,7 +114,25 @@ async function loadEventSelector() {
 
 
         // ---------------------------------
-        // Select current event
+        // Load saved event
+        // ---------------------------------
+
+        const savedEventId =
+            localStorage.getItem(
+                CONTROL_EVENT_STORAGE_KEY
+            );
+
+
+        if (savedEventId) {
+
+            CONTROL_EVENT_ID =
+                savedEventId;
+
+        }
+
+
+        // ---------------------------------
+        // Find current event
         // ---------------------------------
 
         const currentEvent =
@@ -126,10 +150,23 @@ async function loadEventSelector() {
             );
 
 
+        // ---------------------------------
+        // Restore saved/current event
+        // ---------------------------------
+
         if (currentEvent) {
+
+            CONTROL_EVENT_ID =
+                currentEvent.eventId;
 
             eventSelector.value =
                 currentEvent.eventId;
+
+
+            localStorage.setItem(
+                CONTROL_EVENT_STORAGE_KEY,
+                CONTROL_EVENT_ID
+            );
 
         }
 
@@ -148,6 +185,12 @@ async function loadEventSelector() {
 
             eventSelector.value =
                 CONTROL_EVENT_ID;
+
+
+            localStorage.setItem(
+                CONTROL_EVENT_STORAGE_KEY,
+                CONTROL_EVENT_ID
+            );
 
         }
 
@@ -197,6 +240,16 @@ async function changeControlEvent(eventId) {
 
     CONTROL_EVENT_ID =
         eventId;
+
+
+    // ---------------------------------
+    // Save selected event
+    // ---------------------------------
+
+    localStorage.setItem(
+        CONTROL_EVENT_STORAGE_KEY,
+        CONTROL_EVENT_ID
+    );
 
 
     // ---------------------------------
