@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+ name="viewport"
+ content="width=device-width, initial-scale=1.0">
+
+<title>TRAKIVENT Bulk Registration</title>
+
+<style>
+
+/* =====================================
+   TRAKIVENT
+   Bulk Registration Page
+   ===================================== */
+
+:root {
+
+    --bg: #071e3b;
+
+    --card: #0d2b50;
+
+    --input: #12365f;
+
+    --border: #2b527c;
+
+    --text: #ffffff;
+
+    --muted: #a9bdd3;
+
+    --accent: #9cff1e;
+
+    --danger: #ff5c5c;
+
+}
+
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        var(--bg);
+
+    color:
+        var(--text);
+
+}
+
+
+.container {
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding: 30px 20px 50px;
+
+}
+
+
+/* =====================================
+   Header
+   ===================================== */
+
+.header {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+
+}
+
+
+.logo {
+
+    font-size: 32px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+}
+
+
+.logo span {
+
+    color:
+        var(--accent);
+
+}
+
+
+.header p {
+
+    margin-top: 8px;
+
+    color:
+        var(--muted);
+
+    font-size: 15px;
+
+}
+
+
+/* =====================================
+   Card
+   ===================================== */
+
+.card {
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 16px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,0.25);
+
+}
+
+
+.card h1 {
+
+    margin-top: 0;
+
+    margin-bottom: 8px;
+
+    font-size: 25px;
+
+}
+
+
+.cardIntro {
+
+    margin-top: 0;
+
+    margin-bottom: 25px;
+
+    color:
+        var(--muted);
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =====================================
+   Event
+   ===================================== */
+
+.eventGroup {
+
+    max-width: 400px;
+
+    margin-bottom: 25px;
+
+}
+
+
+label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+
+.required {
+
+    color:
+        var(--accent);
+
+}
+
+
+select,
+input {
+
+    width: 100%;
+
+    padding: 11px 12px;
+
+    border-radius: 8px;
+
+    border:
+        1px solid var(--border);
+
+    background:
+        var(--input);
+
+    color:
+        var(--text);
+
+    font-size: 14px;
+
+    outline: none;
+
+}
+
+
+select:focus,
+input:focus {
+
+    border-color:
+        var(--accent);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(156,255,30,0.12);
+
+}
+
+
+/* =====================================
+   Table
+   ===================================== */
+
+.tableWrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    margin-top: 20px;
+
+}
+
+
+.guestTable {
+
+    width: 100%;
+
+    min-width: 950px;
+
+    border-collapse: collapse;
+
+}
+
+
+.guestTable th {
+
+    padding: 11px 8px;
+
+    text-align: left;
+
+    background:
+        #102f54;
+
+    border-bottom:
+        1px solid var(--border);
+
+    color:
+        var(--muted);
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+}
+
+
+.guestTable td {
+
+    padding: 7px;
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.rowNumber {
+
+    width: 45px;
+
+    text-align: center;
+
+    color:
+        var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+.guestTable input,
+.guestTable select {
+
+    min-width: 120px;
+
+}
+
+
+.guestTable .nameField {
+
+    min-width: 190px;
+
+}
+
+
+.guestTable .phoneField {
+
+    min-width: 160px;
+
+}
+
+
+.removeBtn {
+
+    border: none;
+
+    border-radius: 6px;
+
+    padding: 8px 10px;
+
+    background:
+        rgba(255,92,92,0.12);
+
+    color:
+        var(--danger);
+
+    cursor: pointer;
+
+    font-weight: 700;
+
+}
+
+
+.removeBtn:hover {
+
+    background:
+        rgba(255,92,92,0.22);
+
+}
+
+
+/* =====================================
+   Actions
+   ===================================== */
+
+.actions {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 22px;
+
+}
+
+
+.actionBtn {
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 12px 18px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+}
+
+
+.addBtn {
+
+    background:
+        #12365f;
+
+    border:
+        1px solid var(--border);
+
+    color:
+        var(--text);
+
+}
+
+
+.submitBtn {
+
+    background:
+        var(--accent);
+
+    color:
+        #071e3b;
+
+}
+
+
+.submitBtn:disabled {
+
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+}
+
+
+/* =====================================
+   Message
+   ===================================== */
+
+.message {
+
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 14px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+
+.message.error {
+
+    display: block;
+
+    background:
+        rgba(255,92,92,0.10);
+
+    border:
+        1px solid var(--danger);
+
+}
+
+
+.message.success {
+
+    display: block;
+
+    background:
+        rgba(156,255,30,0.10);
+
+    border:
+        1px solid var(--accent);
+
+}
+
+
+/* =====================================
+   Summary
+   ===================================== */
+
+.summary {
+
+    display: none;
+
+    margin-top: 28px;
+
+}
+
+
+.summary h2 {
+
+    margin-top: 0;
+
+    font-size: 20px;
+
+}
+
+
+.summaryGrid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+
+}
+
+
+.summaryBox {
+
+    padding: 18px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 10px;
+
+    background:
+        #102f54;
+
+}
+
+
+.summaryLabel {
+
+    display: block;
+
+    color:
+        var(--muted);
+
+    font-size: 12px;
+
+    margin-bottom: 7px;
+
+}
+
+
+.summaryValue {
+
+    font-size: 25px;
+
+    font-weight: 800;
+
+}
+
+
+/* =====================================
+   Results
+   ===================================== */
+
+.results {
+
+    margin-top: 25px;
+
+}
+
+
+.resultItem {
+
+    padding: 12px;
+
+    margin-bottom: 8px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 8px;
+
+    background:
+        #102f54;
+
+}
+
+
+.resultName {
+
+    font-weight: 700;
+
+}
+
+
+.resultDetails {
+
+    margin-top: 5px;
+
+    color:
+        var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+.rejectedItem {
+
+    border-color:
+        var(--danger);
+
+}
+
+
+.rejectedReason {
+
+    margin-top: 5px;
+
+    color:
+        var(--danger);
+
+    font-size: 13px;
+
+}
+
+
+/* =====================================
+   Mobile
+   ===================================== */
+
+@media (max-width: 700px) {
+
+    .container {
+
+        padding:
+            20px 14px 40px;
+
+    }
+
+
+    .card {
+
+        padding: 20px;
+
+    }
+
+
+    .logo {
+
+        font-size: 27px;
+
+    }
+
+
+    .summaryGrid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="header">
+
+
+<div class="logo">
+
+    TRAKI<span>VENT</span>
+
+</div>
+
+<p>
+
+    Bulk Guest Registration
+
+</p>
+
+
+</header>
+
+<main class="card">
+
+
+<h1>
+
+    Register Multiple Guests
+
+</h1>
+
+
+<p class="cardIntro">
+
+    Add multiple guests to an event and register them in one submission.
+
+    Full name and phone number are required.
+
+</p>
+
+
+<!-- =================================
+     Event Selection
+     ================================= -->
+
+<div class="eventGroup">
+
+    <label for="eventId">
+
+        Event
+        <span class="required">*</span>
+
+    </label>
+
+
+    <select
+        id="eventId"
+        required>
+
+        <option value="EVT-001">
+
+            Demo Event
+
+        </option>
+
+        <option value="EVT-002">
+
+            Second Demo Event
+
+        </option>
+
+    </select>
+
+</div>
+
+
+<!-- =================================
+     Guest Table
+     ================================= -->
+
+<div class="tableWrapper">
+
+    <table class="guestTable">
+
+        <thead>
+
+            <tr>
+
+                <th>#</th>
+
+                <th>Full Name *</th>
+
+                <th>Phone / WhatsApp *</th>
+
+                <th>Email</th>
+
+                <th>Guest Category</th>
+
+                <th>Table Number</th>
+
+                <th>Ticket Type</th>
+
+                <th></th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody id="guestTableBody"></tbody>
+
+    </table>
+
+</div>
+
+
+<!-- =================================
+     Actions
+     ================================= -->
+
+<div class="actions">
+
+    <button
+        type="button"
+        id="addGuestBtn"
+        class="actionBtn addBtn">
+
+        + Add Guest
+
+    </button>
+
+
+    <button
+        type="button"
+        id="submitBtn"
+        class="actionBtn submitBtn">
+
+        Register Guests
+
+    </button>
+
+</div>
+
+
+<!-- =================================
+     Message
+     ================================= -->
+
+<div
+    id="message"
+    class="message">
+
+</div>
+
+
+<!-- =================================
+     Summary
+     ================================= -->
+
+<section
+    id="summary"
+    class="summary">
+
+    <h2>
+
+        Registration Results
+
+    </h2>
+
+
+    <div class="summaryGrid">
+
+
+        <div class="summaryBox">
+
+            <span class="summaryLabel">
+
+                Submitted
+
+            </span>
+
+            <span
+                id="submittedCount"
+                class="summaryValue">
+
+                0
+
+            </span>
+
+        </div>
+
+
+        <div class="summaryBox">
+
+            <span class="summaryLabel">
+
+                Registered
+
+            </span>
+
+            <span
+                id="registeredCount"
+                class="summaryValue">
+
+                0
+
+            </span>
+
+        </div>
+
+
+        <div class="summaryBox">
+
+            <span class="summaryLabel">
+
+                Rejected
+
+            </span>
+
+            <span
+                id="rejectedCount"
+                class="summaryValue">
+
+                0
+
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+    <div
+        id="results"
+        class="results">
+
+    </div>
+
+</section>
+
+
+</main>
+
+</div>
+
+<script src="bulk-registration.js"></script>
+
+</body>
+
+</html>

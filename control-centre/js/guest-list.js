@@ -1,20 +1,40 @@
 // =====================================
 // TRAKIVENT
 // Guest List Module
+// Version 0.3.0
+// =====================================
+
+
+// =====================================
+// Refresh Guest List
 // =====================================
 
 async function refreshGuestList() {
 
     try {
 
-        const data = await apiGuestList();
+        const data =
+            await apiGuestList();
+
 
         const guestList =
             document.getElementById("guestList");
 
+
+        if (!guestList) {
+
+            return;
+
+        }
+
+
         guestList.innerHTML = "";
 
-        if (!data.success) {
+
+        if (
+            !data ||
+            !data.success
+        ) {
 
             guestList.innerHTML =
                 "<div class='emptyFeed'>No guests found.</div>";
@@ -23,159 +43,398 @@ async function refreshGuestList() {
 
         }
 
-        renderGuestList(data.guests);
+
+        renderGuestList(
+            data.guests || []
+        );
 
     }
 
+
     catch (error) {
 
-        console.error("Guest List:", error);
+        console.error(
+            "Guest List:",
+            error
+        );
 
     }
 
 }
+
+
+// =====================================
+// Render Guest List
+// =====================================
 
 function renderGuestList(guests) {
 
     const guestList =
         document.getElementById("guestList");
 
-    // Clear existing guest list before every render.
-    // This prevents duplicates during automatic dashboard refresh.
+
+    if (!guestList) {
+
+        return;
+
+    }
+
+
+    // ---------------------------------
+    // Clear existing list
+    // ---------------------------------
+
+    // Prevent duplicates during
+    // automatic dashboard refresh.
+
     guestList.innerHTML = "";
+
+
+    // ---------------------------------
+    // Guest Groups
+    // ---------------------------------
 
     const groups = {
 
         VIP: [],
+
         Regular: [],
+
         Staff: [],
-        Vendor: []
+
+        Vendor: [],
+
+        Unclassified: []
 
     };
+
+
+    // ---------------------------------
+    // Group Icons
+    // ---------------------------------
 
     const icons = {
 
         VIP: "👑",
+
         Regular: "👤",
+
         Staff: "🛠",
-        Vendor: "🏪"
+
+        Vendor: "🏪",
+
+        Unclassified: "👥"
 
     };
 
-    guests.forEach(function (guest) {
 
-        if (groups[guest.ticketType]) {
+    // ---------------------------------
+    // Assign Guests To Groups
+    // ---------------------------------
 
-            groups[guest.ticketType].push(guest);
+    guests.forEach(
+        function(guest) {
+
+            const ticketType =
+                String(
+                    guest.ticketType || ""
+                )
+                .trim();
+
+
+            // ---------------------------------
+            // Known ticket type
+            // ---------------------------------
+
+            if (
+                ticketType === "VIP" ||
+                ticketType === "Regular" ||
+                ticketType === "Staff" ||
+                ticketType === "Vendor"
+            ) {
+
+                groups[ticketType].push(
+                    guest
+                );
+
+                return;
+
+            }
+
+
+            // ---------------------------------
+            // No ticket type / unknown type
+            // ---------------------------------
+
+            groups.Unclassified.push(
+                guest
+            );
 
         }
+    );
 
-    });
 
-    Object.keys(groups).forEach(function (type) {
+    // =====================================
+    // Render Groups
+    // =====================================
 
-        groups[type].sort(function (a, b) {
+    Object.keys(groups).forEach(
+        function(type) {
 
-            if (a.checkedIn === b.checkedIn) return 0;
 
-            return a.checkedIn ? 1 : -1;
+            // ---------------------------------
+            // Sort
+            // ---------------------------------
 
-        });
+            // Pending guests appear first.
+            // Checked-in guests appear after them.
 
-        let guestsToShow = groups[type];
+            groups[type].sort(
+                function(a, b) {
 
-        if (guestFilter === "pending") {
+                    if (
+                        a.checkedIn ===
+                        b.checkedIn
+                    ) {
 
-            guestsToShow =
-                guestsToShow.filter(g => !g.checkedIn);
+                        return 0;
 
-        }
+                    }
 
-        if (guestFilter === "checked") {
 
-            guestsToShow =
-                guestsToShow.filter(g => g.checkedIn);
+                    return a.checkedIn
+                        ? 1
+                        : -1;
 
-        }
+                }
+            );
 
-        if (guestsToShow.length === 0) return;
 
-        const header =
-            document.createElement("div");
+            // ---------------------------------
+            // Apply Guest Filter
+            // ---------------------------------
 
-        header.className =
-            `groupHeader group-${type.toLowerCase()}`;
+            let guestsToShow =
+                groups[type];
 
-        header.innerHTML = `
 
-            <span>
-                ${icons[type]} ${type.toUpperCase()}
-            </span>
+            if (
+                guestFilter === "pending"
+            ) {
 
-            <span>
-                ${guestsToShow.length} Guest${guestsToShow.length > 1 ? "s" : ""}
-            </span>
+                guestsToShow =
+                    guestsToShow.filter(
+                        function(guest) {
 
-        `;
+                            return !guest.checkedIn;
 
-        guestList.appendChild(header);
+                        }
+                    );
 
-        guestsToShow.forEach(function (guest) {
+            }
 
-            const item =
-                document.createElement("div");
 
-            item.className = "guestItem";
+            if (
+                guestFilter === "checked"
+            ) {
 
-            item.innerHTML = `
+                guestsToShow =
+                    guestsToShow.filter(
+                        function(guest) {
 
-                <div class="guestRow">
+                            return guest.checkedIn;
 
-                    <div>
+                        }
+                    );
 
-                        <div class="guestName">
+            }
 
-                            ${guest.fullName}
 
-                        </div>
+            // ---------------------------------
+            // Skip Empty Group
+            // ---------------------------------
 
-                        <div class="guestTicket ticket-${guest.ticketType.toLowerCase()}">
+            if (
+                guestsToShow.length === 0
+            ) {
 
-                            ${guest.registrationNo}
+                return;
 
-                        </div>
+            }
 
-                    </div>
 
-                    <div class="${guest.checkedIn ? "guestStatusIn" : "guestStatusOut"}"></div>
+            // ---------------------------------
+            // Group Header
+            // ---------------------------------
 
-                </div>
+            const header =
+                document.createElement(
+                    "div"
+                );
+
+
+            header.className =
+                `groupHeader group-${type.toLowerCase()}`;
+
+
+            header.innerHTML = `
+
+                <span>
+
+                    ${icons[type]}
+                    ${type.toUpperCase()}
+
+                </span>
+
+                <span>
+
+                    ${guestsToShow.length}
+                    Guest${guestsToShow.length > 1 ? "s" : ""}
+
+                </span>
 
             `;
 
-            item.addEventListener("click", function () {
 
-                document
-                    .querySelectorAll(".guestItem")
-                    .forEach(function (g) {
+            guestList.appendChild(
+                header
+            );
 
-                        g.classList.remove("activeGuest");
 
-                    });
+            // ---------------------------------
+            // Guests
+            // ---------------------------------
 
-                item.classList.add("activeGuest");
+            guestsToShow.forEach(
+                function(guest) {
 
-                document.getElementById("searchBox").value =
-                    guest.registrationNo;
 
-                searchGuest(guest.registrationNo);
+                    const item =
+                        document.createElement(
+                            "div"
+                        );
 
-            });
 
-            guestList.appendChild(item);
+                    item.className =
+                        "guestItem";
 
-        });
 
-    });
+                    // ---------------------------------
+                    // Safe Ticket Class
+                    // ---------------------------------
+
+                    const ticketClass =
+                        String(
+                            guest.ticketType || ""
+                        )
+                        .trim()
+                        .toLowerCase()
+                        .replace(
+                            /\s+/g,
+                            "-"
+                        );
+
+
+                    // ---------------------------------
+                    // Display Registration
+                    // ---------------------------------
+
+                    item.innerHTML = `
+
+                        <div class="guestRow">
+
+                            <div>
+
+                                <div class="guestName">
+
+                                    ${guest.fullName}
+
+                                </div>
+
+
+                                <div class="guestTicket ${
+                                    ticketClass
+                                        ? "ticket-" + ticketClass
+                                        : "ticket-unclassified"
+                                }">
+
+                                    ${guest.registrationNo}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="${
+                                guest.checkedIn
+                                    ? "guestStatusIn"
+                                    : "guestStatusOut"
+                            }"></div>
+
+                        </div>
+
+                    `;
+
+
+                    // ---------------------------------
+                    // Guest Selection
+                    // ---------------------------------
+
+                    item.addEventListener(
+                        "click",
+                        function() {
+
+
+                            document
+                                .querySelectorAll(
+                                    ".guestItem"
+                                )
+                                .forEach(
+                                    function(g) {
+
+                                        g.classList.remove(
+                                            "activeGuest"
+                                        );
+
+                                    }
+                                );
+
+
+                            item.classList.add(
+                                "activeGuest"
+                            );
+
+
+                            const searchBox =
+                                document.getElementById(
+                                    "searchBox"
+                                );
+
+
+                            if (searchBox) {
+
+                                searchBox.value =
+                                    guest.registrationNo;
+
+                            }
+
+
+                            searchGuest(
+                                guest.registrationNo
+                            );
+
+                        }
+                    );
+
+
+                    guestList.appendChild(
+                        item
+                    );
+
+                }
+            );
+
+        }
+    );
 
 }

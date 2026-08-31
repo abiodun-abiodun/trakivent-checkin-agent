@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>TRAKIVENT Guest Registration</title>
+
+<style>
+
+:root {
+
+    --bg: #071e3b;
+    --card: #0d2b50;
+    --input: #12365f;
+    --border: #2b527c;
+    --text: #ffffff;
+    --muted: #a9bdd3;
+    --accent: #9cff1e;
+    --danger: #ff5c5c;
+
+}
+
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        var(--bg);
+
+    color:
+        var(--text);
+
+}
+
+
+.container {
+
+    width: 100%;
+
+    max-width: 720px;
+
+    margin: 0 auto;
+
+    padding: 30px 20px 50px;
+
+}
+
+
+.header {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+
+}
+
+
+.logo {
+
+    font-size: 32px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+}
+
+
+.logo span {
+
+    color:
+        var(--accent);
+
+}
+
+
+.header p {
+
+    margin-top: 8px;
+
+    color:
+        var(--muted);
+
+    font-size: 15px;
+
+}
+
+
+.card {
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 16px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,0.25);
+
+}
+
+
+.card h1 {
+
+    margin-top: 0;
+
+    margin-bottom: 8px;
+
+    font-size: 25px;
+
+}
+
+
+.cardIntro {
+
+    margin-top: 0;
+
+    margin-bottom: 28px;
+
+    color:
+        var(--muted);
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+
+.formGroup {
+
+    margin-bottom: 20px;
+
+}
+
+
+label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+
+.required {
+
+    color:
+        var(--accent);
+
+}
+
+
+.optional {
+
+    color:
+        var(--muted);
+
+    font-size: 12px;
+
+    font-weight: normal;
+
+}
+
+
+input,
+select {
+
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border-radius: 9px;
+
+    border:
+        1px solid var(--border);
+
+    background:
+        var(--input);
+
+    color:
+        var(--text);
+
+    font-size: 15px;
+
+    outline: none;
+
+}
+
+
+input:focus,
+select:focus {
+
+    border-color:
+        var(--accent);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(156,255,30,0.12);
+
+}
+
+
+input::placeholder {
+
+    color:
+        #7f9ab6;
+
+}
+
+
+select {
+
+    cursor: pointer;
+
+}
+
+
+.sectionLabel {
+
+    margin-top: 28px;
+
+    margin-bottom: 18px;
+
+    padding-bottom: 8px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    color:
+        var(--muted);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.6px;
+
+}
+
+
+.submitBtn {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 14px;
+
+    margin-top: 8px;
+
+    background:
+        var(--accent);
+
+    color:
+        #071e3b;
+
+    font-size: 16px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+}
+
+
+.submitBtn:hover {
+
+    opacity: 0.9;
+
+}
+
+
+.submitBtn:disabled {
+
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+}
+
+
+.message {
+
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 14px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+
+.message.error {
+
+    display: block;
+
+    background:
+        rgba(255,92,92,0.10);
+
+    border:
+        1px solid var(--danger);
+
+}
+
+
+.successCard {
+
+    display: none;
+
+    margin-top: 25px;
+
+    padding: 22px;
+
+    border-radius: 12px;
+
+    background:
+        #102f54;
+
+    border:
+        1px solid var(--accent);
+
+    text-align: center;
+
+}
+
+
+.successCard h2 {
+
+    margin-top: 0;
+
+    color:
+        var(--accent);
+
+}
+
+
+.successName {
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    margin-bottom: 15px;
+
+}
+
+
+.successRow {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 10px 0;
+
+    border-bottom:
+        1px solid var(--border);
+
+    text-align: left;
+
+}
+
+
+.successRow:last-child {
+
+    border-bottom: none;
+
+}
+
+
+.successLabel {
+
+    color:
+        var(--muted);
+
+}
+
+
+.successValue {
+
+    font-weight: 700;
+
+    text-align: right;
+
+    word-break: break-word;
+
+}
+
+
+.qrSection {
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid var(--border);
+
+}
+
+
+.qrTitle {
+
+    margin-bottom: 15px;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+}
+
+
+.qrImage {
+
+    display: none;
+
+    width: 300px;
+
+    max-width: 100%;
+
+    height: auto;
+
+    margin: 0 auto 18px;
+
+    padding: 10px;
+
+    background: #ffffff;
+
+    border-radius: 10px;
+
+}
+
+
+.downloadQR {
+
+    display: inline-block;
+
+    padding: 12px 20px;
+
+    border-radius: 9px;
+
+    background:
+        var(--accent);
+
+    color:
+        #071e3b;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    text-decoration: none;
+
+}
+
+
+.newRegistration {
+
+    display: block;
+
+    margin-top: 15px;
+
+    padding: 12px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 9px;
+
+    background:
+        transparent;
+
+    color:
+        var(--text);
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    width: 100%;
+
+}
+
+
+@media (max-width: 600px) {
+
+    .container {
+
+        padding:
+            20px 14px 40px;
+
+    }
+
+
+    .card {
+
+        padding: 20px;
+
+    }
+
+
+    .logo {
+
+        font-size: 27px;
+
+    }
+
+
+    .successRow {
+
+        flex-direction: column;
+
+        gap: 3px;
+
+    }
+
+
+    .successValue {
+
+        text-align: left;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+<header class="header">
+
+    <div class="logo">
+
+        TRAKI<span>VENT</span>
+
+    </div>
+
+    <p>
+
+        Event Guest Registration
+
+    </p>
+
+</header>
+
+
+<main class="card">
+
+
+    <h1>
+
+        Register Guest
+
+    </h1>
+
+
+    <p class="cardIntro">
+
+        Add a guest to the selected event.
+
+        Required fields are marked with
+
+        <span class="required">*</span>.
+
+    </p>
+
+
+    <form id="registrationForm">
+
+
+        <div class="formGroup">
+
+            <label for="eventId">
+
+                Event
+                <span class="required">*</span>
+
+            </label>
+
+
+            <select
+                id="eventId"
+                name="eventId"
+                required>
+
+                <option value="EVT-001">
+
+                    Demo Event
+
+                </option>
+
+                <option value="EVT-002">
+
+                    Second Demo Event
+
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="sectionLabel">
+
+            Guest Information
+
+        </div>
+
+
+        <div class="formGroup">
+
+            <label for="fullName">
+
+                Full Name
+                <span class="required">*</span>
+
+            </label>
+
+
+            <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="Enter guest's full name"
+                autocomplete="name"
+                required>
+
+        </div>
+
+
+        <div class="formGroup">
+
+            <label for="phone">
+
+                Phone / WhatsApp Number
+                <span class="required">*</span>
+
+            </label>
+
+
+            <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="e.g. 08012345678"
+                autocomplete="tel"
+                required>
+
+        </div>
+
+
+        <div class="formGroup">
+
+            <label for="email">
+
+                Email Address
+
+                <span class="optional">
+
+                    Optional
+
+                </span>
+
+            </label>
+
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="guest@example.com"
+                autocomplete="email">
+
+        </div>
+
+
+        <div class="formGroup">
+
+            <label for="guestCategory">
+
+                Guest Category
+
+                <span class="optional">
+
+                    Optional
+
+                </span>
+
+            </label>
+
+
+            <input
+                type="text"
+                id="guestCategory"
+                name="guestCategory"
+                placeholder="e.g. Family, Friend, Speaker, Sponsor">
+
+        </div>
+
+
+        <div class="formGroup">
+
+            <label for="tableNumber">
+
+                Table Number
+
+                <span class="optional">
+
+                    Optional
+
+                </span>
+
+            </label>
+
+
+            <input
+                type="text"
+                id="tableNumber"
+                name="tableNumber"
+                placeholder="e.g. A12">
+
+        </div>
+
+
+        <div class="formGroup">
+
+            <label for="ticketType">
+
+                Ticket Type
+
+                <span class="optional">
+
+                    Optional
+
+                </span>
+
+            </label>
+
+
+            <select
+                id="ticketType"
+                name="ticketType">
+
+                <option value="">
+
+                    Not specified
+
+                </option>
+
+                <option value="VIP">
+
+                    VIP
+
+                </option>
+
+                <option value="Regular">
+
+                    Regular
+
+                </option>
+
+                <option value="Staff">
+
+                    Staff
+
+                </option>
+
+                <option value="Vendor">
+
+                    Vendor
+
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            type="submit"
+            id="submitBtn"
+            class="submitBtn">
+
+            Register Guest
+
+        </button>
+
+
+    </form>
+
+
+    <div
+        id="message"
+        class="message">
+
+    </div>
+
+
+    <div
+        id="successCard"
+        class="successCard">
+
+        <h2>
+
+            Registration Successful ✓
+
+        </h2>
+
+
+        <div
+            id="successName"
+            class="successName">
+
+        </div>
+
+
+        <div class="successRow">
+
+            <span class="successLabel">
+
+                Registration No.
+
+            </span>
+
+
+            <span
+                id="successRegistration"
+                class="successValue">
+
+            </span>
+
+        </div>
+
+
+        <div class="successRow">
+
+            <span class="successLabel">
+
+                QR Token
+
+            </span>
+
+
+            <span
+                id="successQR"
+                class="successValue">
+
+            </span>
+
+        </div>
+
+
+        <div class="successRow">
+
+            <span class="successLabel">
+
+                Event
+
+            </span>
+
+
+            <span
+                id="successEvent"
+                class="successValue">
+
+            </span>
+
+        </div>
+
+
+        <div class="qrSection">
+
+            <div class="qrTitle">
+
+                Guest QR Code
+
+            </div>
+
+
+            <img
+                id="qrImage"
+                class="qrImage"
+                alt="Guest QR Code">
+
+
+            <a
+                id="downloadQR"
+                class="downloadQR"
+                href="#"
+                download>
+
+                Download QR Code
+
+            </a>
+
+
+            <button
+                type="button"
+                id="newRegistration"
+                class="newRegistration"
+                onclick="window.location.reload()">
+
+                Register Another Guest
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+</div>
+
+
+<script src="registration.js"></script>
+
+</body>
+
+</html>
