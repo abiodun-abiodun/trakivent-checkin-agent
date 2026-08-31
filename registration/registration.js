@@ -1,22 +1,163 @@
+// =====================================================
+// TRAKIVENT
+// Single Guest Registration
+// Version 0.2.0
+// Dynamic Event Selection
+// =====================================================
+
+
 const REGISTRATION_API_URL =
     "https://script.google.com/macros/s/AKfycbx-PZRxcXfgbz09VGvQJYc34Cpv6hro1XJb_8oNcEOOIwTIDjpukz6KStuM2St1u_-2/exec";
 
 
+// =====================================================
+// DOM Elements
+// =====================================================
+
 const registrationForm =
     document.getElementById("registrationForm");
-
 
 const successCard =
     document.getElementById("successCard");
 
-
 const message =
     document.getElementById("message");
-
 
 const submitButton =
     document.getElementById("submitBtn");
 
+const eventSelect =
+    document.getElementById("eventId");
+
+
+// =====================================================
+// Load Events
+// =====================================================
+
+async function loadEvents() {
+
+    if (!eventSelect) {
+
+        return;
+
+    }
+
+
+    try {
+
+        eventSelect.disabled = true;
+
+
+        eventSelect.innerHTML = `
+
+            <option value="">
+                Loading events...
+            </option>
+
+        `;
+
+
+        const response =
+            await fetch(
+                REGISTRATION_API_URL +
+                "?action=events"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Events Response:",
+            data
+        );
+
+
+        if (
+            !data ||
+            !data.success ||
+            !Array.isArray(data.events)
+        ) {
+
+            throw new Error(
+                "Unable to load events."
+            );
+
+        }
+
+
+        eventSelect.innerHTML = `
+
+            <option value="">
+                Select an event
+            </option>
+
+        `;
+
+
+        data.events.forEach(
+            function(event) {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                option.value =
+                    event.eventId;
+
+
+                option.textContent =
+                    event.eventName;
+
+
+                eventSelect.appendChild(
+                    option
+                );
+
+            }
+        );
+
+
+        eventSelect.disabled = false;
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Event Loading Error:",
+            error
+        );
+
+
+        eventSelect.innerHTML = `
+
+            <option value="">
+                Unable to load events
+            </option>
+
+        `;
+
+
+        eventSelect.disabled = true;
+
+
+        showError(
+            "Unable to load events. Please refresh the page and try again."
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// Registration Form
+// =====================================================
 
 if (registrationForm) {
 
@@ -104,7 +245,6 @@ if (registrationForm) {
 
             setLoading(true);
 
-
             hideMessage();
 
             hideSuccessCard();
@@ -191,6 +331,10 @@ if (registrationForm) {
 }
 
 
+// =====================================================
+// Display Registration Success
+// =====================================================
+
 function displayRegistrationSuccess(guest) {
 
     const successName =
@@ -261,7 +405,14 @@ function displayRegistrationSuccess(guest) {
     }
 
 
-    if (qrImage && guest.qrToken) {
+    // ---------------------------------------------
+    // Generate QR Image
+    // ---------------------------------------------
+
+    if (
+        qrImage &&
+        guest.qrToken
+    ) {
 
         const qrURL =
             "https://api.qrserver.com/v1/create-qr-code/" +
@@ -289,6 +440,7 @@ function displayRegistrationSuccess(guest) {
 
             downloadQR.href =
                 qrURL;
+
 
             downloadQR.download =
                 guest.qrToken +
@@ -322,6 +474,10 @@ function displayRegistrationSuccess(guest) {
 }
 
 
+// =====================================================
+// Error Message
+// =====================================================
+
 function showError(text) {
 
     if (!message) {
@@ -347,6 +503,10 @@ function showError(text) {
 }
 
 
+// =====================================================
+// Hide Message
+// =====================================================
+
 function hideMessage() {
 
     if (!message) {
@@ -370,6 +530,10 @@ function hideMessage() {
 }
 
 
+// =====================================================
+// Hide Success Card
+// =====================================================
+
 function hideSuccessCard() {
 
     if (successCard) {
@@ -381,6 +545,10 @@ function hideSuccessCard() {
 
 }
 
+
+// =====================================================
+// Loading State
+// =====================================================
 
 function setLoading(isLoading) {
 
@@ -401,3 +569,10 @@ function setLoading(isLoading) {
             : "Register Guest";
 
 }
+
+
+// =====================================================
+// Initialise
+// =====================================================
+
+loadEvents();
