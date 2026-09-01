@@ -1,8 +1,8 @@
 // =====================================================
 // TRAKIVENT
 // Single Guest Registration
-// Version 0.2.0
-// Dynamic Event Selection
+// Version 0.3.0
+// Dynamic Event Selection + QR Handling
 // =====================================================
 
 
@@ -37,25 +37,18 @@ const eventSelect =
 async function loadEvents() {
 
     if (!eventSelect) {
-
         return;
-
     }
-
 
     try {
 
         eventSelect.disabled = true;
 
-
         eventSelect.innerHTML = `
-
             <option value="">
                 Loading events...
             </option>
-
         `;
-
 
         const response =
             await fetch(
@@ -63,16 +56,13 @@ async function loadEvents() {
                 "?action=events"
             );
 
-
         const data =
             await response.json();
-
 
         console.log(
             "Events Response:",
             data
         );
-
 
         if (
             !data ||
@@ -86,15 +76,11 @@ async function loadEvents() {
 
         }
 
-
         eventSelect.innerHTML = `
-
             <option value="">
                 Select an event
             </option>
-
         `;
-
 
         data.events.forEach(
             function(event) {
@@ -104,14 +90,11 @@ async function loadEvents() {
                         "option"
                     );
 
-
                 option.value =
                     event.eventId;
 
-
                 option.textContent =
                     event.eventName;
-
 
                 eventSelect.appendChild(
                     option
@@ -120,9 +103,7 @@ async function loadEvents() {
             }
         );
 
-
         eventSelect.disabled = false;
-
 
     }
 
@@ -133,18 +114,13 @@ async function loadEvents() {
             error
         );
 
-
         eventSelect.innerHTML = `
-
             <option value="">
                 Unable to load events
             </option>
-
         `;
 
-
         eventSelect.disabled = true;
-
 
         showError(
             "Unable to load events. Please refresh the page and try again."
@@ -167,42 +143,35 @@ if (registrationForm) {
 
             event.preventDefault();
 
-
             const fullName =
                 document.getElementById("fullName")
                     .value
                     .trim();
-
 
             const phone =
                 document.getElementById("phone")
                     .value
                     .trim();
 
-
             const email =
                 document.getElementById("email")
                     .value
                     .trim();
-
 
             const guestCategory =
                 document.getElementById("guestCategory")
                     .value
                     .trim();
 
-
             const tableNumber =
                 document.getElementById("tableNumber")
                     .value
                     .trim();
 
-
             const ticketType =
                 document.getElementById("ticketType")
                     .value
                     .trim();
-
 
             const eventId =
                 document.getElementById("eventId")
@@ -297,6 +266,25 @@ if (registrationForm) {
                 }
 
 
+                if (
+                    !data.guest ||
+                    !data.guest.registrationNo
+                ) {
+
+                    showError(
+                        "Registration completed, but the guest record could not be displayed."
+                    );
+
+                    console.error(
+                        "Invalid registration response:",
+                        data
+                    );
+
+                    return;
+
+                }
+
+
                 displayRegistrationSuccess(
                     data.guest
                 );
@@ -310,7 +298,6 @@ if (registrationForm) {
                     "Registration Error:",
                     error
                 );
-
 
                 showError(
                     "Unable to connect to TRAKIVENT. Please try again."
@@ -342,30 +329,25 @@ function displayRegistrationSuccess(guest) {
             "successName"
         );
 
-
     const successRegistration =
         document.getElementById(
             "successRegistration"
         );
-
 
     const successQR =
         document.getElementById(
             "successQR"
         );
 
-
     const successEvent =
         document.getElementById(
             "successEvent"
         );
 
-
     const qrImage =
         document.getElementById(
             "qrImage"
         );
-
 
     const downloadQR =
         document.getElementById(
@@ -392,7 +374,7 @@ function displayRegistrationSuccess(guest) {
     if (successQR) {
 
         successQR.textContent =
-            guest.qrToken || "";
+            guest.qrToken || "Not available";
 
     }
 
@@ -401,6 +383,38 @@ function displayRegistrationSuccess(guest) {
 
         successEvent.textContent =
             guest.eventName || "";
+
+    }
+
+
+    // ---------------------------------------------
+    // Reset QR State
+    // ---------------------------------------------
+
+    if (qrImage) {
+
+        qrImage.style.display =
+            "none";
+
+        qrImage.removeAttribute(
+            "src"
+        );
+
+    }
+
+
+    if (downloadQR) {
+
+        downloadQR.style.display =
+            "none";
+
+        downloadQR.removeAttribute(
+            "href"
+        );
+
+        downloadQR.removeAttribute(
+            "download"
+        );
 
     }
 
@@ -423,36 +437,84 @@ function displayRegistrationSuccess(guest) {
             );
 
 
-        qrImage.src =
-            qrURL;
-
-
         qrImage.alt =
             "QR Code for " +
-            guest.fullName;
+            (guest.fullName || "guest");
 
 
-        qrImage.style.display =
-            "block";
+        qrImage.onload =
+            function() {
+
+                qrImage.style.display =
+                    "block";
 
 
-        if (downloadQR) {
+                if (downloadQR) {
 
-            downloadQR.href =
-                qrURL;
+                    downloadQR.href =
+                        qrURL;
+
+                    downloadQR.download =
+                        guest.qrToken +
+                        ".png";
+
+                    downloadQR.style.display =
+                        "inline-block";
+
+                }
+
+            };
 
 
-            downloadQR.download =
-                guest.qrToken +
-                ".png";
+        qrImage.onerror =
+            function() {
 
-        }
+                qrImage.style.display =
+                    "none";
+
+
+                if (downloadQR) {
+
+                    downloadQR.style.display =
+                        "none";
+
+                }
+
+
+                console.error(
+                    "QR image failed to load:",
+                    qrURL
+                );
+
+            };
+
+
+        qrImage.src =
+            qrURL;
 
     }
 
 
-    registrationForm.style.display =
-        "none";
+    else {
+
+        console.warn(
+            "No QR token returned for guest:",
+            guest
+        );
+
+    }
+
+
+    // ---------------------------------------------
+    // Show Success Card
+    // ---------------------------------------------
+
+    if (registrationForm) {
+
+        registrationForm.style.display =
+            "none";
+
+    }
 
 
     if (successCard) {
