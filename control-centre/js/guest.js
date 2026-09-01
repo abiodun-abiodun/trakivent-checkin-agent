@@ -1,39 +1,52 @@
 // =====================================
 // TRAKIVENT
 // Guest Module
-// Version 1.0
+// Version 1.1
 // =====================================
 
-async function checkinGuest(token){
+
+// =====================================
+// Check In Guest
+// =====================================
+
+async function checkinGuest(token) {
 
     const button =
         document.querySelector(".checkinBtn");
 
-    if(button){
+
+    if (button) {
 
         button.disabled = true;
 
         button.innerHTML = `
-    <span class="spinner"></span>
-    Checking in...
-`;
+            <span class="spinner"></span>
+            Checking in...
+        `;
 
     }
 
-    try{
+
+    try {
 
         const data =
             await apiCheckin(token);
 
-        if(!data.success){
 
-            alert(data.message || "Unable to check in guest.");
+        if (!data || !data.success) {
 
-            if(button){
+            alert(
+                data?.message ||
+                "Unable to check in guest."
+            );
+
+
+            if (button) {
 
                 button.disabled = false;
 
-                button.textContent = "✔ Check In";
+                button.textContent =
+                    "✔ Check In";
 
             }
 
@@ -41,23 +54,66 @@ async function checkinGuest(token){
 
         }
 
-        // Update guest profile immediately
-        renderGuestProfile(data.guest);
 
-        // Refresh dashboard in background
-        refreshDashboard();
+        // ---------------------------------
+        // Update guest profile immediately
+        // ---------------------------------
+
+        if (typeof renderGuestProfile === "function") {
+
+            renderGuestProfile(
+                data.guest
+            );
+
+        }
+
+
+        // ---------------------------------
+        // Refresh dashboard
+        // ---------------------------------
+
+        await refreshDashboard();
+
+
+        // ---------------------------------
+        // Restore selected guest
+        // ---------------------------------
+
+        if (
+            data.guest &&
+            data.guest.registrationNo &&
+            typeof searchGuest === "function"
+        ) {
+
+            await searchGuest(
+                data.guest.registrationNo
+            );
+
+        }
 
     }
 
-    catch(error){
 
-        console.error("Check-in:", error);
+    catch (error) {
 
-        if(button){
+        console.error(
+            "Check-in:",
+            error
+        );
+
+
+        alert(
+            "Unable to complete check-in."
+        );
+
+    }
+
+
+    finally {
+
+        if (button) {
 
             button.disabled = false;
-
-            button.textContent = "✔ Check In";
 
         }
 
@@ -65,30 +121,68 @@ async function checkinGuest(token){
 
 }
 
-async function undoGuest(token){
 
-    try{
+// =====================================
+// Undo Check In
+// =====================================
+
+async function undoGuest(token) {
+
+    try {
 
         const data =
             await apiUndo(token);
 
-        if(data.success){
 
-            await refreshDashboard();
+        if (!data || !data.success) {
 
-            await searchGuest(token);
+            alert(
+                data?.message ||
+                "Unable to undo check-in."
+            );
 
-        }else{
+            return;
 
-            alert(data.message || "Unable to undo check-in.");
+        }
+
+
+        // ---------------------------------
+        // Refresh dashboard
+        // ---------------------------------
+
+        await refreshDashboard();
+
+
+        // ---------------------------------
+        // Restore selected guest
+        // ---------------------------------
+
+        if (
+            data.guest &&
+            data.guest.registrationNo &&
+            typeof searchGuest === "function"
+        ) {
+
+            await searchGuest(
+                data.guest.registrationNo
+            );
 
         }
 
     }
 
-    catch(error){
 
-        console.error("Undo:", error);
+    catch (error) {
+
+        console.error(
+            "Undo:",
+            error
+        );
+
+
+        alert(
+            "Unable to undo check-in."
+        );
 
     }
 
