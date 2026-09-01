@@ -33,6 +33,105 @@ document.getElementById("results");
 
 let rowCount = 0;
 
+async function loadEvents() {
+
+    try {
+
+        eventIdInput.innerHTML = `
+            <option value="">
+                Loading events...
+            </option>
+        `;
+
+
+        const response =
+            await fetch(
+                REGISTRATION_API_URL +
+                "?action=events"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Events Response:",
+            data
+        );
+
+
+        if (
+            !data ||
+            !data.success ||
+            !Array.isArray(data.events)
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load events."
+            );
+
+        }
+
+
+        eventIdInput.innerHTML = `
+            <option value="">
+                Select an event
+            </option>
+        `;
+
+
+        data.events.forEach(
+            function(event) {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                option.value =
+                    event.eventId;
+
+
+                option.textContent =
+                    event.eventName;
+
+
+                eventIdInput.appendChild(
+                    option
+                );
+
+            }
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Load Events Error:",
+            error
+        );
+
+
+        eventIdInput.innerHTML = `
+            <option value="">
+                Unable to load events
+            </option>
+        `;
+
+
+        showError(
+            "Unable to load events. Please refresh the page and try again."
+        );
+
+    }
+
+}
+
 function addGuestRow() {
 
 
@@ -623,3 +722,8 @@ addGuestRow();
 addGuestRow();
 
 addGuestRow();
+
+
+// Load available events.
+
+loadEvents();
